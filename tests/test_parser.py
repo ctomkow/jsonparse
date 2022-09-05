@@ -2,15 +2,15 @@
 
 import pytest
 
-from jsons.jsons import JsonSearch
+from jsonparse.parser import Parser
 
 
-class TestJsonParser:
+class TestParser:
 
     @pytest.fixture
     def stack_init(self):
 
-        return JsonSearch()
+        return Parser()
 
     @pytest.fixture
     def push_one_str(self, stack_init):

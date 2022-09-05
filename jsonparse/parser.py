@@ -4,7 +4,7 @@
 # all_inst_of_key_chain: find all values of an ordered key chain (queue based search)
 
 
-class JsonSearch:
+class Parser:
 
     def __init__(self, stack_trace=False, queue_trace=False):
 

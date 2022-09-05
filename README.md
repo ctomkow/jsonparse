@@ -1,18 +1,21 @@
-# json-search
-A simple JSON key search library
+# jsonparse
+A simple JSON key parsing library
 
 ### Install
 ```bash
-pip install git+https://github.com/ctomkow/json-search.git
+pip install git+https://github.com/ctomkow/jsonparse.git
 ```
 
 ### Usage
 ```python
-from jsons.jsons import JsonSearch
+from jsonparse import Parser
+import json
 
-search = JsonSearch(stack_trace=True)
-val = search.all_inst_of_key(json_data, 'key')
-val = search.all_inst_of_key_chain(json_data, 'my', 'key', 'chain')
+search    = Parse(stack_trace=True)
+data = json.loads('[{"key":1}, {"key":2}, {"my":{"key":{"chain":"A"}}}]')
+
+val = search.all_inst_of_key(data, 'key')
+val = search.all_inst_of_key_chain(data, 'my', 'key', 'chain')
 ```
 ### Details
 `all_inst_of_key()` is a depth-first search (stack-based) which returns all values of matching key:value pairs.
