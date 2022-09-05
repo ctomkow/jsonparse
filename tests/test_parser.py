@@ -10,7 +10,7 @@ class TestParser:
     @pytest.fixture
     def parser_init(self):
 
-        return Parser()
+        return Parser(stack_trace=True, queue_trace=True)
 
     @pytest.fixture
     def push_stack_one_str(self, parser_init):
@@ -86,6 +86,7 @@ class TestParser:
 
         assert parser_init._stack_size() == 1
 
+    # _stack_push_list_elem
     def test_list_parse_with_dict_as_elem(self, parser_init, push_stack_one_dict_one_str_num_elem):
 
         try:
@@ -111,10 +112,11 @@ class TestParser:
         assert parser_init._stack_pop() == 'test-list-2'
         assert parser_init._stack_pop() == 'test-list-1'
 
+    #_stack_all_key_values_in_dict
     def test_dict_parse_with_list_as_elem(self, parser_init, push_stack_one_list_one_str_elem):
 
         try:
-            parser_init._stack_all_key_values_in_dict(parser_init._stack_pop(), '')
+            parser_init._stack_all_key_values_in_dict('', parser_init._stack_pop())
         except TypeError:
             assert True
         else:
@@ -123,7 +125,7 @@ class TestParser:
     def test_dict_parse_with_num_as_key(self, parser_init, push_stack_one_dict_one_str_num_elem):
 
         try:
-            parser_init._stack_all_key_values_in_dict(parser_init._stack_pop(), 123)
+            parser_init._stack_all_key_values_in_dict(123, parser_init._stack_pop())
         except TypeError:
             assert True
         else:
@@ -131,15 +133,29 @@ class TestParser:
 
     def test_dict_parse_with_dict_zero_elem_zero_key(self, parser_init):
 
-        parser_init._stack_all_key_values_in_dict({}, '')
+        parser_init._stack_all_key_values_in_dict('', {})
         assert parser_init._stack_size() == 0
 
     def test_dict_parse_with_one_dict_correct_key(self, parser_init, push_stack_one_dict_one_str_num_elem):
 
-        value_list = parser_init._stack_all_key_values_in_dict(parser_init._stack_pop(), 'dict1-key1')
+        value_list = parser_init._stack_all_key_values_in_dict('dict1-key1', parser_init._stack_pop())
         assert value_list.pop() == 1
 
     def test_dict_parse_with_one_dict_incorrect_key(self, parser_init, push_stack_one_dict_one_str_num_elem):
 
-        value_list = parser_init._stack_all_key_values_in_dict(parser_init._stack_pop(), 'wrong')
+        value_list = parser_init._stack_all_key_values_in_dict('wrong', parser_init._stack_pop())
         assert len(value_list) == 0
+
+    # _stack_trace
+    def test_stack_trace_empty_stack(self, parser_init):
+
+        try:
+            parser_init._stack_trace()
+        except IndexError:
+            assert True
+        else:
+            assert False
+    
+    def test_stack_trace_non_empty_stack(self, parser_init, push_stack_one_str):
+
+        parser_init._stack_trace()

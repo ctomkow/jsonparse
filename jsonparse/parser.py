@@ -32,7 +32,7 @@ class Parser:
             if type(elem) is list:
                 self._stack_push_list_elem(elem)
             elif type(elem) is dict:
-                value = self._stack_all_key_values_in_dict(elem, key)
+                value = self._stack_all_key_values_in_dict(key, elem)
                 if value:
                     for v in value:
                         value_list.append(v)
@@ -116,7 +116,7 @@ class Parser:
                 self._stack_push(e)
                 self._stack_trace()
 
-    def _stack_all_key_values_in_dict(self, elem: dict, key: str) -> list:
+    def _stack_all_key_values_in_dict(self, key: str, elem: dict) -> list:
 
         value_list = []
 
