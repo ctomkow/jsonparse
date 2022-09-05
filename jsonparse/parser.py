@@ -63,7 +63,7 @@ class Parser:
                 if type(elem) is list:
                     self._queue_push_list_elem(elem)
                 elif type(elem) is dict:
-                    if self._queue_all_key_values_in_dict(elem, key_list[0]):
+                    if self._queue_all_key_values_in_dict(key_list[0], elem):
                         key_found = True
                 else:  # according to RFC 7159, valid JSON can also contain a string, number, 'false', 'null', 'true'
                     pass  # discard these other values as they do not have a key
@@ -82,7 +82,7 @@ class Parser:
         stack = []
         return stack
 
-    def _stack_push(self, elem: str) -> None:
+    def _stack_push(self, elem: Any) -> None:
 
         self.stack_ref.append(elem)
 
@@ -116,6 +116,7 @@ class Parser:
                 self._stack_push(e)
                 self._stack_trace()
 
+    # TODO: refactor this method to be consistent with sibling queue method
     def _stack_all_key_values_in_dict(self, key: str, elem: dict) -> list:
 
         value_list = []
@@ -147,34 +148,34 @@ class Parser:
 
     # QUEUE operations
 
-    def _queue_init(self):
+    def _queue_init(self) -> list:
 
         queue = []
         return queue
 
-    def _queue_push(self, element):
+    def _queue_push(self, elem: Any) -> None:
 
-        self.queue_ref.append(element)
+        self.queue_ref.append(elem)
 
-    def _queue_pop(self):
+    def _queue_pop(self) -> Any:
 
         try:
             return self.queue_ref.pop(0)
         except IndexError:
             raise
 
-    def _queue_peak(self):
+    def _queue_peak(self) -> Any:
 
         try:
             return self.queue_ref[0]
         except IndexError:
             raise
 
-    def _queue_size(self):
+    def _queue_size(self) -> int:
 
         return len(self.queue_ref)
 
-    def _queue_push_list_elem(self, elem):
+    def _queue_push_list_elem(self, elem: list) -> None:
 
         if type(elem) is not list:
             raise TypeError
@@ -186,7 +187,8 @@ class Parser:
                 self._queue_push(e)
                 self._queue_trace()
 
-    def _queue_all_key_values_in_dict(self, elem, key):
+    # TODO: refactor this method to be consistent with sibling stack method
+    def _queue_all_key_values_in_dict(self, key: str, elem: dict) -> bool:
 
         found = False
         if type(elem) is not dict:
@@ -209,7 +211,7 @@ class Parser:
         else:
             return False
 
-    def _queue_trace(self):
+    def _queue_trace(self) -> None:
 
         if self.queue_trace:
             print("QUEUE DEPTH: {}".format(self._queue_size()))

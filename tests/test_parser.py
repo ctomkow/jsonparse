@@ -159,3 +159,14 @@ class TestParser:
     def test_stack_trace_non_empty_stack(self, parser_init, push_stack_one_str):
 
         parser_init._stack_trace()
+
+    # _queue_init
+    def test_init_of_parser_queue(self, parser_init):
+
+        assert parser_init.queue_ref == []
+    
+    # _queue_push
+    def test_pushing_one_onto_empty_queue(self, parser_init):
+
+        parser_init._queue_push('test-str-1')
+        assert len(parser_init.queue_ref) == 1
