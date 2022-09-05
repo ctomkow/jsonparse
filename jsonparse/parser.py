@@ -4,9 +4,13 @@
 # all_inst_of_key_chain: find all values of an ordered key chain (queue based search)
 
 
+from json import JSONDecoder
+from typing import Any
+
+
 class Parser:
 
-    def __init__(self, stack_trace=False, queue_trace=False):
+    def __init__(self, stack_trace: bool = False, queue_trace: bool = False) -> None:
 
         self.stack_trace = stack_trace
         self.queue_trace = queue_trace
@@ -14,7 +18,7 @@ class Parser:
         self.queue_ref = self._queue_init()
 
     # depth first search for all keys using a STACK
-    def all_inst_of_key(self, data, key):
+    def all_inst_of_key(self, data: JSONDecoder, key: str) -> list:
 
         self._stack_push(data)
         self._stack_trace()
@@ -38,7 +42,7 @@ class Parser:
         return value_list
 
     # breadth first search for ordered series of keys using a QUEUE
-    def all_inst_of_key_chain(self, data, *keys):
+    def all_inst_of_key_chain(self, data: JSONDecoder, *keys: str) -> list:
 
         key_list = []
         for k in keys:
@@ -73,34 +77,34 @@ class Parser:
 
     # STACK operations
 
-    def _stack_init(self):
+    def _stack_init(self) -> list:
 
         stack = []
         return stack
 
-    def _stack_push(self, element):
+    def _stack_push(self, elem: str) -> None:
 
-        self.stack_ref.append(element)
+        self.stack_ref.append(elem)
 
-    def _stack_pop(self):
+    def _stack_pop(self) -> Any:
 
         try:
             return self.stack_ref.pop()
         except IndexError:
             raise
 
-    def _stack_peak(self):
+    def _stack_peak(self) -> Any:
 
         try:
             return self.stack_ref[-1:][0]
         except IndexError:
             raise
 
-    def _stack_size(self):
+    def _stack_size(self) -> int:
 
         return len(self.stack_ref)
 
-    def _stack_push_list_elem(self, elem):
+    def _stack_push_list_elem(self, elem: list) -> None:
 
         if type(elem) is not list:
             raise TypeError
@@ -112,7 +116,7 @@ class Parser:
                 self._stack_push(e)
                 self._stack_trace()
 
-    def _stack_all_key_values_in_dict(self, elem, key):
+    def _stack_all_key_values_in_dict(self, elem: dict, key: str) -> list:
 
         value_list = []
 
@@ -132,7 +136,7 @@ class Parser:
                     self._stack_trace()
         return value_list
 
-    def _stack_trace(self):
+    def _stack_trace(self) -> None:
 
         if self.stack_trace:
             print("STACK DEPTH: {}".format(self._stack_size()))
