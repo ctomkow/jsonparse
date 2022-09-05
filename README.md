@@ -11,11 +11,11 @@ pip install git+https://github.com/ctomkow/jsonparse.git
 from jsonparse import Parser
 import json
 
-search    = Parse(stack_trace=True)
+parse = Parser(stack_trace=True, queue_trace=True)
 data = json.loads('[{"key":1}, {"key":2}, {"my":{"key":{"chain":"A"}}}]')
 
-val = search.all_inst_of_key(data, 'key')
-val = search.all_inst_of_key_chain(data, 'my', 'key', 'chain')
+val = parse.all_inst_of_key(data, 'key')
+val = parse.all_inst_of_key_chain(data, 'my', 'key', 'chain')
 ```
 ### Details
 `all_inst_of_key()` is a depth-first search (stack-based) which returns all values of matching key:value pairs.
