@@ -12,13 +12,13 @@ from jsonparse import Parser
 
 parse = Parser(stack_trace=False, queue_trace=False)
 data = [
-        {"key": 1},
-        {"key": 2},
-        {"my": 
-            {"key": 
-                {"chain":"A"}
-            }
+    {"key": 1},
+    {"key": 2},
+    {"my": 
+        {"key": 
+            {"chain":"A"}
         }
+    }
 ]
 
 
@@ -31,8 +31,10 @@ print(parse.key_chain(data, 'my', 'key', 'chain'))
 ['A']
 ```
 ### API
-`key(data, key):`
-    Returns a list of values that have the corresponding key.
+`key(data: dict | list, key: str): -> list`
 
-`key_chain(data, *keys):`
-    Returns a list of values that have the corresponding key chain.
+Returns a list of values that have the corresponding key.
+
+`key_chain(data: dict | list, *keys: str): -> list`
+
+Returns a list of values that have the corresponding key chain.
