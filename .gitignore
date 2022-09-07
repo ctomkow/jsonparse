@@ -5,3 +5,4 @@ __pycache__
 .pytest*
 build/
 *.egg-info
+.vscode
