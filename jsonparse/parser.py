@@ -2,18 +2,42 @@
 #
 # Dynamically parse JSON objects via two main methods...
 #
-# all_inst_of_key: find all values of one key (stack based)
-# all_inst_of_key_chain: find all values of an ordered key chain (queue based)
+# key: find all values of one key (stack based)
+# key_chain: find all values of an ordered key chain (queue based)
 
-# local imports
-from typing import Any
+# python imports
+from typing import Union
 
 
 class Parser:
+    """
+    The Parser class.
+
+    Methods:
+
+    __init__(stack_trace, queue_trace):
+        Returns the Parser object.
+
+    key(data, key):
+        Returns a list of values that have the corresponding key.
+
+    key_chain(data, *keys):
+        Returns a list of values that have the corresponding key chain.
+    """
 
     def __init__(self,
                  stack_trace: bool = False,
                  queue_trace: bool = False) -> None:
+        """
+        Instantiates a Parser object used to access the search methods.
+
+        Keyword arguments:
+
+        stack_trace -- Set this to get a stdout printout of the stack as data
+                       is parsed. This must be a boolean value. Default False.
+        queue_trace -- Set this to get a stdout printout of the queue as data
+                       is parsed. This must be a boolean value. Default False.
+        """
 
         self.stack_trace = stack_trace
         self.queue_trace = queue_trace
@@ -21,8 +45,21 @@ class Parser:
         self.queue_ref = self._queue_init()
 
     # depth first search for all keys using a STACK
-    def all_inst_of_key(self, data: Any, key: str) -> list:
+    def key(self, data: Union[dict, list], key: str) -> list:
+        """
+        Search JSON data that consists of key:value pairs for all instances of
+        provided key. The data can have complex nested dictionaries and lists.
+        If duplicate keys exist in the data (at any layer) all matching key
+        values will be returned. Data is parsed using a depth first search
+        with a stack.
 
+        Keyword arguments:
+
+        data -- The python object representing JSON data with key:value pairs.
+                This could be a dictionary or a list.
+        key  -- The key that will be searched for in the JSON data.
+                This must be a string.
+        """
         self._stack_push(data)
         self._stack_trace()
 
@@ -46,8 +83,23 @@ class Parser:
         return value_list
 
     # breadth first search for ordered series of keys using a QUEUE
-    def all_inst_of_key_chain(self, data: Any, *keys: str) -> list:
+    def key_chain(self, data: Union[dict, list], *keys: str) -> list:
+        """
+        Search JSON data that consists of key:value pairs for the first
+        instance of provided key chain. The data can have complex nested
+        dictionaries and lists. If duplicate key chains exist in the data,
+        all key chain values will be returned. The data is parsed using
+        breadth first search using a queue.
 
+        Keyword arguments:
+
+        data -- The python object representing JSON data with key:value pairs.
+                This could be a dictionary or a list.
+        keys -- A series of keys that will be searched for in the JSON data.
+                The first key will be depth 1, second key depth 2, and so on.
+                The ordering of the keys matter.
+                These must be a string.
+        """
         key_list = []
         for k in keys:
             key_list.append(k)
@@ -87,18 +139,18 @@ class Parser:
         stack = []
         return stack
 
-    def _stack_push(self, elem: Any) -> None:
+    def _stack_push(self, elem: Union[dict, list]) -> None:
 
         self.stack_ref.append(elem)
 
-    def _stack_pop(self) -> Any:
+    def _stack_pop(self) -> Union[dict, list]:
 
         try:
             return self.stack_ref.pop()
         except IndexError:
             raise
 
-    def _stack_peak(self) -> Any:
+    def _stack_peak(self) -> Union[dict, list]:
 
         try:
             return self.stack_ref[-1:][0]
@@ -121,7 +173,6 @@ class Parser:
                 self._stack_push(e)
                 self._stack_trace()
 
-    # TODO: refactor this method to be consistent with sibling queue method
     def _stack_all_key_values_in_dict(self, key: str, elem: dict) -> list:
 
         value_list = []
@@ -158,18 +209,18 @@ class Parser:
         queue = []
         return queue
 
-    def _queue_push(self, elem: Any) -> None:
+    def _queue_push(self, elem: Union[dict, list]) -> None:
 
         self.queue_ref.append(elem)
 
-    def _queue_pop(self) -> Any:
+    def _queue_pop(self) -> Union[dict, list]:
 
         try:
             return self.queue_ref.pop(0)
         except IndexError:
             raise
 
-    def _queue_peak(self) -> Any:
+    def _queue_peak(self) -> Union[dict, list]:
 
         try:
             return self.queue_ref[0]
@@ -192,7 +243,6 @@ class Parser:
                 self._queue_push(e)
                 self._queue_trace()
 
-    # TODO: refactor this method to be consistent with sibling stack method
     def _queue_all_key_values_in_dict(self, key: str, elem: dict) -> bool:
 
         found = False

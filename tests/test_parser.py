@@ -1,14 +1,18 @@
+# Craig Tomkow
+#
+# Tests only public methods
 
-
-import pytest
-
+# local imports
 from jsonparse.parser import Parser
+
+# 3rd part imports
+import pytest
 
 
 class TestParser:
 
     @pytest.fixture
-    def parser_init(self):
+    def parser(self):
 
         return Parser(stack_trace=True, queue_trace=True)
 
@@ -87,9 +91,9 @@ class TestParser:
         ]
 
     # all_inst_of_key
-    def test_all_inst_of_key(self, parser_init, complex_json):
+    def test_key(self, parser, complex_json):
 
-        result = parser_init.all_inst_of_key(complex_json, "id")
+        result = parser.key(complex_json, "id")
         assert result == [
             '0003', '5004', '5003', '5002', '5001', '1002',
             '1001', '0002', '5005', '5004', '5003', '5002', '5001', '1001',
@@ -98,9 +102,9 @@ class TestParser:
         ]
 
     # all_inst_of_key_chain
-    def test_all_inst_of_key_chain(self, parser_init, complex_json):
+    def test_key_chain(self, parser, complex_json):
 
-        result = parser_init.all_inst_of_key_chain(
+        result = parser.key_chain(
             complex_json,
             "batters",
             "batter",

@@ -1,22 +1,38 @@
 # jsonparse
-A simple JSON key parsing library
+A simple JSON key parsing library. It's use-case is to extract the values from key:value pairs in JSON data.
 
 ### Install
-```bash
+```
 pip install git+https://github.com/ctomkow/jsonparse.git
 ```
 
 ### Usage
 ```python
 from jsonparse import Parser
-import json
 
-parse = Parser(stack_trace=True, queue_trace=True)
-data = json.loads('[{"key":1}, {"key":2}, {"my":{"key":{"chain":"A"}}}]')
+parse = Parser(stack_trace=False, queue_trace=False)
+data = [
+        {"key": 1},
+        {"key": 2},
+        {"my": 
+            {"key": 
+                {"chain":"A"}
+            }
+        }
+]
 
-val = parse.all_inst_of_key(data, 'key')
-val = parse.all_inst_of_key_chain(data, 'my', 'key', 'chain')
+
+print(parse.key(data, 'key'))
+
+[{'chain': 'A'}, 2, 1]
+
+print(parse.key_chain(data, 'my', 'key', 'chain'))
+
+['A']
 ```
-### Details
-`all_inst_of_key()` is a depth-first search (stack-based) which returns all values of matching key:value pairs.
-`all_inst_of_key_chain()` is a breadth-first search (queue-based) which returns all values of matching terminal key:value pairs where all previous keys in chain are found.
+### API
+`key(data, key):`
+    Returns a list of values that have the corresponding key.
+
+`key_chain(data, *keys):`
+    Returns a list of values that have the corresponding key chain.
