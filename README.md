@@ -3,7 +3,7 @@ A simple JSON key parsing library. It's use-case is to extract the values from k
 
 ### Install
 ```
-pip install git+https://github.com/ctomkow/jsonparse.git
+pip install jsonparse
 ```
 
 ### Usage
@@ -23,12 +23,13 @@ data = [
 
 
 print(parse.key(data, 'key'))
-
 [{'chain': 'A'}, 2, 1]
 
 print(parse.key_chain(data, 'my', 'key', 'chain'))
-
 ['A']
+
+print(parse.key_chain(data, 'key'))
+[1, 2]
 ```
 ### API
 `key(data: dict | list, key: str): -> list`
