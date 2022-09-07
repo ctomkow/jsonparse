@@ -25,10 +25,10 @@ data = [
 print(parse.key(data, 'key'))
 [{'chain': 'A'}, 2, 1]
 
-print(parse.key_chain(data, 'my', 'key', 'chain'))
+print(parse.key_chain(data, ['my', 'key', 'chain']))
 ['A']
 
-print(parse.key_chain(data, 'key'))
+print(parse.key_chain(data, ['key']))
 [1, 2]
 ```
 ### API
@@ -36,6 +36,6 @@ print(parse.key_chain(data, 'key'))
 
 Returns a list of values that have the corresponding key.
 
-`key_chain(data: dict | list, *keys: str): -> list`
+`key_chain(data: dict | list, keys: list): -> list`
 
 Returns a list of values that have the corresponding key chain.

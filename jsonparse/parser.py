@@ -21,7 +21,7 @@ class Parser:
     key(data, key):
         Returns a list of values that have the corresponding key.
 
-    key_chain(data, *keys):
+    key_chain(data, keys):
         Returns a list of values that have the corresponding key chain.
     """
 
@@ -58,15 +58,11 @@ class Parser:
         data -- The python object representing JSON data with key:value pairs.
                 This could be a dictionary or a list.
         key  -- The key that will be searched for in the JSON data.
-                This must be a string.
+                The key must be a string.
         """
 
-        if not key:  # if key is an empty string
-            raise ValueError
-        elif not isinstance(key, str):  # if key is not a string
-            raise ValueError
-        elif not isinstance(data, (dict, list)):  # if data is not dict or list
-            raise ValueError
+        if not self._valid_key_input(data, key):
+            raise
 
         self._stack_push(data)
         self._stack_trace()
@@ -91,7 +87,7 @@ class Parser:
         return value_list
 
     # breadth first search for ordered series of keys using a QUEUE
-    def key_chain(self, data: Union[dict, list], *keys: str) -> list:
+    def key_chain(self, data: Union[dict, list], keys: list) -> list:
         """
         Search JSON data that consists of key:value pairs for the first
         instance of provided key chain. The data can have complex nested
@@ -103,27 +99,19 @@ class Parser:
 
         data -- The python object representing JSON data with key:value pairs.
                 This could be a dictionary or a list.
-        keys -- A series of keys that will be searched for in the JSON data.
+        keys -- A list of keys that will be searched for in the JSON data.
                 The first key will be depth 1, second key depth 2, and so on.
                 The ordering of the keys matter.
-                These must be a string.
+                The keys must be strings within a list.
         """
 
-        key_list = []
-        for k in keys:
-            if not k:  # if key is an empty string
-                raise ValueError
-            if not isinstance(k, str):  # if key is not a string
-                raise ValueError
-            key_list.append(k)
-
-        if not isinstance(data, (dict, list)):  # if data is not a dict or list
-            raise ValueError
+        if not self._valid_key_chain_input(data, keys):
+            raise
 
         self._queue_push(data)
         self._queue_trace()
 
-        while len(key_list) >= 1:
+        while len(keys) >= 1:
 
             queue_size_snapshot = self._queue_size()
             key_found = False
@@ -135,7 +123,7 @@ class Parser:
                 if type(elem) is list:
                     self._queue_push_list_elem(elem)
                 elif type(elem) is dict:
-                    if self._queue_all_key_values_in_dict(key_list[0], elem):
+                    if self._queue_all_key_values_in_dict(keys[0], elem):
                         key_found = True
                 else:  # according to RFC 7159, valid JSON can also contain a
                     # string, number, 'false', 'null', 'true'
@@ -144,7 +132,7 @@ class Parser:
                 queue_size_snapshot -= 1
 
             if key_found:
-                key_list.pop(0)
+                keys.pop(0)
 
         return self.queue_ref
 
@@ -290,3 +278,34 @@ class Parser:
                 print(self._queue_peak())
             except IndexError:
                 raise
+
+    # Input validation
+
+    def _valid_key_input(
+            self,
+            data: Union[dict, list],
+            key: str) -> bool:
+
+        if not isinstance(data, (dict, list)):
+            raise ValueError
+        elif not isinstance(key, str):
+            raise ValueError
+        return True
+
+    def _valid_key_chain_input(
+            self,
+            data: Union[dict, list],
+            keys: list) -> bool:
+
+        if not isinstance(data, (dict, list)):
+            raise ValueError
+        elif not isinstance(keys, list):
+            raise ValueError
+
+        for k in keys:
+            if not k:  # if key is an empty string
+                raise ValueError
+            if not isinstance(k, str):  # if key is not a string
+                raise ValueError
+
+        return True

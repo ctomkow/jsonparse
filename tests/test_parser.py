@@ -136,9 +136,11 @@ class TestParser:
 
         result = parser.key_chain(
             complex_json,
-            "batters",
-            "batter",
-            "type"
+            [
+                "batters",
+                "batter",
+                "type"
+            ]
         )
         assert result == [
             'Regular', 'Chocolate', 'Blueberry', "Devil's Food",
@@ -149,7 +151,7 @@ class TestParser:
         try:
             parser.key_chain(
                 complex_json,
-                ""
+                [""]
             )
         except ValueError:
             assert True
@@ -159,7 +161,7 @@ class TestParser:
         try:
             parser.key_chain(
                 complex_json,
-                5
+                [5]
             )
         except ValueError:
             assert True
@@ -169,9 +171,11 @@ class TestParser:
         try:
             parser.key_chain(
                 "string of data",
-                "string",
-                "of",
-                "data"
+                [
+                    "string",
+                    "of",
+                    "data"
+                ]
             )
         except ValueError:
             assert True
