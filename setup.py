@@ -4,6 +4,7 @@ import jsonparse
 # python imports
 from setuptools import setup
 import os
+from codecs import open
 
 # read from the VERSION file
 with open(os.path.join(
