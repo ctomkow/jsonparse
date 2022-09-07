@@ -1,10 +1,11 @@
+# Craig Tomkow
+#
 # Dynamically parse JSON objects via two main methods...
 #
 # all_inst_of_key: find all values of one key (stack based)
 # all_inst_of_key_chain: find all values of an ordered key chain (queue based)
 
-
-from json import JSONDecoder
+# local imports
 from typing import Any
 
 
@@ -20,7 +21,7 @@ class Parser:
         self.queue_ref = self._queue_init()
 
     # depth first search for all keys using a STACK
-    def all_inst_of_key(self, data: JSONDecoder, key: str) -> list:
+    def all_inst_of_key(self, data: Any, key: str) -> list:
 
         self._stack_push(data)
         self._stack_trace()
@@ -45,7 +46,7 @@ class Parser:
         return value_list
 
     # breadth first search for ordered series of keys using a QUEUE
-    def all_inst_of_key_chain(self, data: JSONDecoder, *keys: str) -> list:
+    def all_inst_of_key_chain(self, data: Any, *keys: str) -> list:
 
         key_list = []
         for k in keys:
