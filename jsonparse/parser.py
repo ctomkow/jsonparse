@@ -60,6 +60,14 @@ class Parser:
         key  -- The key that will be searched for in the JSON data.
                 This must be a string.
         """
+
+        if not key:  # if key is an empty string
+            raise ValueError
+        elif not isinstance(key, str):  # if key is not a string
+            raise ValueError
+        elif not isinstance(data, (dict, list)):  # if data is not dict or list
+            raise ValueError
+
         self._stack_push(data)
         self._stack_trace()
 
@@ -100,9 +108,17 @@ class Parser:
                 The ordering of the keys matter.
                 These must be a string.
         """
+
         key_list = []
         for k in keys:
+            if not k:  # if key is an empty string
+                raise ValueError
+            if not isinstance(k, str):  # if key is not a string
+                raise ValueError
             key_list.append(k)
+
+        if not isinstance(data, (dict, list)):  # if data is not a dict or list
+            raise ValueError
 
         self._queue_push(data)
         self._queue_trace()

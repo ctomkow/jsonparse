@@ -101,6 +101,36 @@ class TestParser:
             '1004', '1003', '1002', '1001'
         ]
 
+    def test_key_empty_key(self, parser, complex_json):
+
+        try:
+            parser.key(
+                complex_json,
+                ""
+            )
+        except ValueError:
+            assert True
+
+    def test_key_not_str_key(self, parser, complex_json):
+
+        try:
+            parser.key(
+                complex_json,
+                5
+            )
+        except ValueError:
+            assert True
+
+    def test_key_not_list_or_dict_data(self, parser):
+
+        try:
+            parser.key(
+                "string of data",
+                "string"
+            )
+        except ValueError:
+            assert True
+
     # all_inst_of_key_chain
     def test_key_chain(self, parser, complex_json):
 
@@ -113,3 +143,35 @@ class TestParser:
         assert result == [
             'Regular', 'Chocolate', 'Blueberry', "Devil's Food",
             'Regular', 'Regular', 'Chocolate']
+
+    def test_key_chain_empty_key(self, parser, complex_json):
+
+        try:
+            parser.key_chain(
+                complex_json,
+                ""
+            )
+        except ValueError:
+            assert True
+
+    def test_key_chain_not_str_key(self, parser, complex_json):
+
+        try:
+            parser.key_chain(
+                complex_json,
+                5
+            )
+        except ValueError:
+            assert True
+
+    def test_key_chain_not_list_or_dict_data(self, parser):
+
+        try:
+            parser.key_chain(
+                "string of data",
+                "string",
+                "of",
+                "data"
+            )
+        except ValueError:
+            assert True
