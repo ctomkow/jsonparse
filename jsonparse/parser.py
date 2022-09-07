@@ -1,7 +1,7 @@
 # Dynamically parse JSON objects via two main methods...
 #
-# all_inst_of_key: find all values of one key (stack based search)
-# all_inst_of_key_chain: find all values of an ordered key chain (queue based search)
+# all_inst_of_key: find all values of one key (stack based)
+# all_inst_of_key_chain: find all values of an ordered key chain (queue based)
 
 
 from json import JSONDecoder
@@ -10,7 +10,9 @@ from typing import Any
 
 class Parser:
 
-    def __init__(self, stack_trace: bool = False, queue_trace: bool = False) -> None:
+    def __init__(self,
+                 stack_trace: bool = False,
+                 queue_trace: bool = False) -> None:
 
         self.stack_trace = stack_trace
         self.queue_trace = queue_trace
@@ -36,8 +38,9 @@ class Parser:
                 if value:
                     for v in value:
                         value_list.append(v)
-            else:  # according to RFC 7159, valid JSON can also contain a string, number, 'false', 'null', 'true'
-                pass  # discard these other values as they do not have a key
+            else:  # according to RFC 7159, valid JSON can also contain a
+                # string, number, 'false', 'null', 'true'
+                pass  # discard these other values as they don't have a key
 
         return value_list
 
@@ -65,8 +68,9 @@ class Parser:
                 elif type(elem) is dict:
                     if self._queue_all_key_values_in_dict(key_list[0], elem):
                         key_found = True
-                else:  # according to RFC 7159, valid JSON can also contain a string, number, 'false', 'null', 'true'
-                    pass  # discard these other values as they do not have a key
+                else:  # according to RFC 7159, valid JSON can also contain a
+                    # string, number, 'false', 'null', 'true'
+                    pass  # discard these other values as they don't have a key
 
                 queue_size_snapshot -= 1
 
