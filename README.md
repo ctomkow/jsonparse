@@ -1,15 +1,12 @@
 # jsonparse
 Python (3.7|3.8|3.9|3.10)
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/ctomkow/jsonparse?label=version&sort=semver)
-![Codecov](https://img.shields.io/codecov/c/github/ctomkow/jsonparse)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ctomkow/jsonparse/jsonparse)
 [![codecov](https://codecov.io/gh/ctomkow/jsonparse/branch/master/graph/badge.svg?token=affX7FZaFk)](https://codecov.io/gh/ctomkow/jsonparse)
 
 </br>
 
 > **jsonparse** is a simple JSON parsing library. Extract the values from key:value pairs providing the key(s).
-
-</br>
 
 ### Install
 ```

@@ -21,7 +21,7 @@ DESCRIPTION = 'Search through JSON data key:vales by key'
 URL = url = 'https://github.com/ctomkow/jsonparse'
 EMAIL = 'ctomkow@gmail.com'
 AUTHOR = 'Craig Tomkow'
-REQUIRES_PYTHON = '>=3.6.0'
+REQUIRES_PYTHON = '>=3.7.0'
 
 setup(
         name=NAME,
@@ -33,5 +33,12 @@ setup(
         author=AUTHOR,
         author_email=EMAIL,
         license='MIT',
-        packages=['jsonparse']
+        packages=['jsonparse'],
+        classifiers=[
+          'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.8',
+          'Programming Language :: Python :: 3.9',
+          'Programming Language :: Python :: 3.10',
+        ],
 )
