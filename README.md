@@ -1,5 +1,5 @@
 # jsonparse
-Python (3.7|3.8|3.9|3.10)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/jsonparse))
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/ctomkow/jsonparse?label=version&sort=semver)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ctomkow/jsonparse/jsonparse)
 [![codecov](https://codecov.io/gh/ctomkow/jsonparse/branch/master/graph/badge.svg?token=affX7FZaFk)](https://codecov.io/gh/ctomkow/jsonparse)
