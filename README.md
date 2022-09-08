@@ -1,5 +1,15 @@
 # jsonparse
-A simple JSON key parsing library. It's use-case is to extract the values from key:value pairs in JSON data.
+Python (3.7|3.8|3.9|3.10)
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/ctomkow/jsonparse?label=version&sort=semver)
+![Codecov](https://img.shields.io/codecov/c/github/ctomkow/jsonparse)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ctomkow/jsonparse/jsonparse)
+[![codecov](https://codecov.io/gh/ctomkow/jsonparse/branch/master/graph/badge.svg?token=affX7FZaFk)](https://codecov.io/gh/ctomkow/jsonparse)
+
+</br>
+
+> **jsonparse** is a simple JSON parsing library. Extract the values from key:value pairs providing the key(s).
+
+</br>
 
 ### Install
 ```
@@ -34,8 +44,10 @@ print(parse.key_chain(data, ['key']))
 ### API
 `key(data: dict | list, key: str): -> list`
 
-Returns a list of values that have the corresponding key.
+- Provide JSON data as a dictionary or a list, as well as the key as a string
+- Returns a list of values that match the corresponding key.
 
 `key_chain(data: dict | list, keys: list): -> list`
 
-Returns a list of values that have the corresponding key chain.
+- Provide JSON data as a dictionary or a list, as well as a list of keys as strings.
+- Returns a list of values that match the corresponding key chain.
