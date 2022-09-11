@@ -17,7 +17,7 @@ with open("README.md", "r", "utf-8") as f:
 
 # Package meta-data.
 NAME = 'jsonparse'
-DESCRIPTION = 'Search through JSON data key:vales by key'
+DESCRIPTION = 'Search through JSON data key:values by key(s)'
 URL = url = 'https://github.com/ctomkow/jsonparse'
 EMAIL = 'ctomkow@gmail.com'
 AUTHOR = 'Craig Tomkow'
