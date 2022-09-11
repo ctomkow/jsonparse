@@ -34,22 +34,22 @@ data = [
 ]
 
 
-print(parse.key(data, 'key'))
+parse.key(data, 'key')
 [{'chain': 'B'}, {'chain': 'A'}, 2, 1]
 
-print(parse.key(data, 'chain'))
+parse.key(data, 'chain')
 ['B', 'A']
 
-print(parse.key_chain(data, ['my', 'key', 'chain']))
+parse.key_chain(data, ['my', 'key', 'chain'])
 ['A']
 
-print(parse.key_chain(data, ['key']))
+parse.key_chain(data, ['key'])
 [1, 2]
 
-print(parse.key_chain(data, ['*', 'key', 'chain']))
+parse.key_chain(data, ['*', 'key', 'chain'])
 ['A', 'B']
 
-print(parse.key_chain(data, ['*', 'key', '*']))
+parse.key_chain(data, ['*', 'key', '*'])
 ['A', 'B']
 ```
 ### API
