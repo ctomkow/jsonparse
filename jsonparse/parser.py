@@ -64,6 +64,7 @@ class Parser:
         if not self._valid_key_input(data, key):
             raise
 
+        self.stack_ref = self._stack_init()  # init a new queue every request
         self._stack_push(data)
         self._stack_trace()
 
@@ -103,11 +104,13 @@ class Parser:
                 The first key will be depth 1, second key depth 2, and so on.
                 The ordering of the keys matter.
                 The keys must be strings within a list.
+                A wildcard '*' key(s) can be used to match any.
         """
 
         if not self._valid_key_chain_input(data, keys):
             raise
 
+        self.queue_ref = self._queue_init()  # init a new queue every request
         self._queue_push(data)
         self._queue_trace()
 
@@ -259,7 +262,7 @@ class Parser:
             pass
         else:
             for e in elem:
-                if e == key:  # only push on matching key values
+                if e == key or key == '*':  # only push on matching key values
                     self._queue_push(elem[e])
                     self._queue_trace()
                     found = True

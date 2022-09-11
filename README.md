@@ -25,18 +25,32 @@ data = [
         {"key": 
             {"chain":"A"}
         }
+    },
+    {"your":
+    	{"key":
+    		{"chain":"B"}
+    	}
     }
 ]
 
 
 print(parse.key(data, 'key'))
-[{'chain': 'A'}, 2, 1]
+[{'chain': 'B'}, {'chain': 'A'}, 2, 1]
+
+print(parse.key(data, 'chain'))
+['B', 'A']
 
 print(parse.key_chain(data, ['my', 'key', 'chain']))
 ['A']
 
 print(parse.key_chain(data, ['key']))
 [1, 2]
+
+print(parse.key_chain(data, ['*', 'key', 'chain']))
+['A', 'B']
+
+print(parse.key_chain(data, ['*', 'key', '*']))
+['A', 'B']
 ```
 ### API
 `key(data: dict | list, key: str): -> list`
@@ -48,3 +62,5 @@ print(parse.key_chain(data, ['key']))
 
 - Provide JSON data as a dictionary or a list, as well as a list of keys as strings.
 - Returns a list of values that match the corresponding key chain.
+
+> Wildcard **'*'** can be used as key(s) to match any.

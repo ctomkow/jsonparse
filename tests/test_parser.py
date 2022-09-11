@@ -58,7 +58,7 @@ class TestParser:
                                 {"id": "1001", "type": "Regular"}
                             ]
                     },
-                "topping":
+                "top_stuff":
                     [
                         {"id": "5001", "type": "None"},
                         {"id": "5002", "type": "Glazed"},
@@ -80,7 +80,7 @@ class TestParser:
                                 {"id": "1002", "type": "Chocolate"}
                             ]
                     },
-                "topping":
+                "on_top_thing":
                     [
                         {"id": "5001", "type": "None"},
                         {"id": "5002", "type": "Glazed"},
@@ -179,3 +179,16 @@ class TestParser:
             )
         except ValueError:
             assert True
+
+    def test_key_chain_wildcard(self, parser, complex_json):
+
+        result = parser.key_chain(
+            complex_json,
+            [
+                "*",
+                "id"
+            ]
+        )
+        assert result == ["5001", "5002", "5003", "5004", "5005", "5006",
+                          "5007", "5001", "5002", "5003", "5004", "5005",
+                          "5001", "5002", "5003", "5004"]
