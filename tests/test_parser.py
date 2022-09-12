@@ -118,7 +118,7 @@ class TestParser:
                 complex_json,
                 5
             )
-        except ValueError:
+        except TypeError:
             assert True
 
     def test_key_not_list_or_dict_data(self, parser):
@@ -128,7 +128,7 @@ class TestParser:
                 "string of data",
                 "string"
             )
-        except ValueError:
+        except TypeError:
             assert True
 
     # all_inst_of_key_chain
@@ -163,7 +163,7 @@ class TestParser:
                 complex_json,
                 [5]
             )
-        except ValueError:
+        except TypeError:
             assert True
 
     def test_key_chain_not_list_or_dict_data(self, parser):
@@ -177,7 +177,7 @@ class TestParser:
                     "data"
                 ]
             )
-        except ValueError:
+        except TypeError:
             assert True
 
     def test_key_chain_wildcard(self, parser, complex_json):
