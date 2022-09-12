@@ -290,8 +290,10 @@ class Parser:
             key: str) -> bool:
 
         if not isinstance(data, (dict, list)):
-            raise ValueError
+            raise TypeError
         elif not isinstance(key, str):
+            raise TypeError
+        elif not key:  # if key is an empty string
             raise ValueError
         return True
 
@@ -301,14 +303,14 @@ class Parser:
             keys: list) -> bool:
 
         if not isinstance(data, (dict, list)):
-            raise ValueError
+            raise TypeError
         elif not isinstance(keys, list):
-            raise ValueError
+            raise TypeError
 
         for k in keys:
             if not k:  # if key is an empty string
                 raise ValueError
             if not isinstance(k, str):  # if key is not a string
-                raise ValueError
+                raise TypeError
 
         return True
