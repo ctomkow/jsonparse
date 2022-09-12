@@ -54,7 +54,7 @@ parse.key_chain(data, ['*', 'key', '*'])
 ```
 ### API
 `key(data: dict | list, key: str): -> list`
-
+ 
 - Provide JSON data as a dictionary or a list, as well as the key as a string
 - Returns a list of values that match the corresponding key.
 
