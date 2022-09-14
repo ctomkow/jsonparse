@@ -6,7 +6,7 @@
 
 </br>
 
-> **jsonparse** is a simple JSON parsing library. Extract the values from key:value pairs providing the key(s).
+> **jsonparse** is a simple JSON parsing library. Extract what's needed from key:value pairs.
 
 ### Install
 ```
@@ -17,50 +17,72 @@ pip install jsonparse
 ```python
 from jsonparse import Parser
 
-parse = Parser(stack_trace=False, queue_trace=False)
+parser = Parser(stack_trace=False, queue_trace=False)
+
 data = [
     {"key": 1},
     {"key": 2},
     {"my": 
         {"key": 
-            {"chain":"A"}
+            {
+                "chain": "A",
+                "rope": 5,
+                "string": 1.2,
+                "cable": False
+            }
         }
     },
     {"your":
     	{"key":
-    		{"chain":"B"}
+    		{
+                "chain": "B"
+            }
     	}
     }
 ]
 
 
-parse.key(data, 'key')
-[{'chain': 'B'}, {'chain': 'A'}, 2, 1]
-
-parse.key(data, 'chain')
+parser.key(data, 'chain')
 ['B', 'A']
 
-parse.key_chain(data, ['my', 'key', 'chain'])
+parser.key(data, 'key')
+[{'chain': 'B'}, {'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}, 2, 1]
+
+
+parser.key_chain(data, ['my', 'key', 'chain'])
 ['A']
 
-parse.key_chain(data, ['key'])
+parser.key_chain(data, ['key'])
 [1, 2]
 
-parse.key_chain(data, ['*', 'key', 'chain'])
+parser.key_chain(data, ['*', 'key', 'chain'])
 ['A', 'B']
 
-parse.key_chain(data, ['*', 'key', '*'])
-['A', 'B']
+parser.key_chain(data, ['*', 'key', '*'])
+['A', 5, 1.2, False, 'B']
+
+
+parser.key_value(data, 'cable', False)
+[{'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}]
+
+parser.key_value(data, 'chain', 'B')
+[{'chain': 'B'}]
 ```
 ### API
-`key(data: dict | list, key: str): -> list`
+`key(data: dict | list, key: str) -> list`
  
 - Provide JSON data as a dictionary or a list, as well as the key as a string
 - Returns a list of values that match the corresponding key.
 
-`key_chain(data: dict | list, keys: list): -> list`
+`key_chain(data: dict | list, keys: list) -> list`
 
 - Provide JSON data as a dictionary or a list, as well as a list of keys as strings.
 - Returns a list of values that match the corresponding key chain.
 
-> Wildcard **'*'** can be used as key(s) to match any.
+    > Wildcard **'*'** can be used as key(s) to match any.
+
+`key_value(data: dict | list, key: str, value: str | int | float | bool) -> list`
+
+- Provide JSON data as a dictionary or a list, a key as a string,
+  and a value as a string, integer, float, or boolean.
+- Returns a list of set(s) that contain the key:value pair.

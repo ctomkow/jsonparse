@@ -4,6 +4,7 @@
 #
 # key: find all values of one key (stack based)
 # key_chain: find all values of an ordered key chain (queue based)
+# key_value: find all key:value pairs and return the parent set(s)
 
 # python imports
 from typing import Union
@@ -23,6 +24,9 @@ class Parser:
 
     key_chain(data, keys):
         Returns a list of values that have the corresponding key chain.
+
+    key_value(data, key, value):
+        Returns a list of set(s) that contain the key value pair.
     """
 
     def __init__(self,
@@ -143,6 +147,53 @@ class Parser:
 
         return self.queue_ref
 
+    def key_value(self,
+                  data: Union[dict, list],
+                  key: str,
+                  value: Union[str, int, float, bool]) -> list:
+        """
+        Search JSON data that consists of key:value pairs for all instances of
+        provided key and value pair. The parent set that contains the key:value
+        pair will be returned. The data can have complex nested
+        dictionaries and lists. If duplicate key and value pairs exist in
+        the data (at any layer) all matching key and value pair set(s)
+        that contain the key:value pair will be returned. Data is parsed
+        using a depth first search with a stack.
+
+        Keyword arguments:
+
+        data -- The python object representing JSON data with key:value pairs.
+                This could be a dictionary or a list.
+        key  -- The key that will be searched for in the JSON data.
+                The key must be a string.
+        value -- The value that will be searched for in the JSON data.
+                 The value must be a string, integer, float, or boolean.
+        """
+
+        if not self._valid_key_value_input(data, key, value):
+            raise
+
+        self.stack_ref = self._stack_init()  # init a new queue every request
+        self._stack_push(data)
+        self._stack_trace()
+
+        value_list = []
+
+        while self._stack_size() >= 1:
+
+            elem = self._stack_pop()
+
+            if type(elem) is list:
+                self._stack_push_list_elem(elem)
+            elif type(elem) is dict:
+                if self._stack_all_key_and_value_in_dict(key, value, elem):
+                    value_list.append(elem)
+            else:  # according to RFC 7159, valid JSON can also contain a
+                # string, number, 'false', 'null', 'true'
+                pass  # discard these other values as they don't have a key
+
+        return value_list
+
     # STACK operations
 
     def _stack_init(self) -> list:
@@ -203,6 +254,30 @@ class Parser:
                     self._stack_push(elem[e])
                     self._stack_trace()
         return value_list
+
+    def _stack_all_key_and_value_in_dict(
+            self,
+            key: str,
+            value: Union[str, int, float, bool],
+            elem: dict) -> bool:
+
+        if type(elem) is not dict:
+            raise TypeError
+        elif type(key) is not str:
+            raise TypeError
+        elif not isinstance(value, (str, int, float, bool)):
+            raise TypeError
+
+        if len(elem) <= 0:  # don't want an empty dict on the stack
+            pass
+        else:
+            for e in elem:
+                if e == key and elem[e] == value:
+                    return True
+                else:
+                    self._stack_push(elem[e])
+                    self._stack_trace()
+        return False
 
     def _stack_trace(self) -> None:
 
@@ -317,4 +392,20 @@ class Parser:
             if not isinstance(k, str):  # if key is not a string
                 raise TypeError
 
+        return True
+
+    def _valid_key_value_input(
+            self,
+            data: Union[dict, list],
+            key: str,
+            value: Union[str, int, float, bool]) -> bool:
+
+        if not isinstance(data, (dict, list)):
+            raise TypeError
+        elif not isinstance(key, str):
+            raise TypeError
+        elif not key:  # if key is an empty string
+            raise ValueError
+        elif not isinstance(value, (str, int, float, bool)):
+            raise TypeError
         return True

@@ -203,3 +203,25 @@ class TestParser:
         assert result == ["5001", "5002", "5003", "5004", "5005", "5006",
                           "5007", "5001", "5002", "5003", "5004", "5005",
                           "5001", "5002", "5003", "5004"]
+
+    def test_key_value(self, parser, complex_json):
+
+        result = parser.key_value(
+            complex_json,
+            "id",
+            "1001"
+        )
+
+        assert result == [{'id': '1001', 'type': 'Regular'},
+                          {'id': '1001', 'type': 'Regular'},
+                          {'id': '1001', 'type': 'Regular'}]
+
+    def test_key_value_not_found(self, parser, complex_json):
+
+        result = parser.key_value(
+            complex_json,
+            "id",
+            5.4
+        )
+
+        assert result == []
