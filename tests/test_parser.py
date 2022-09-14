@@ -90,7 +90,6 @@ class TestParser:
             }
         ]
 
-    # all_inst_of_key
     def test_key(self, parser, complex_json):
 
         result = parser.key(complex_json, "id")
@@ -100,6 +99,11 @@ class TestParser:
             '0001', '5007', '5006', '5005', '5004', '5003', '5002', '5001',
             '1004', '1003', '1002', '1001'
         ]
+
+    def test_key_not_found(self, parser, complex_json):
+
+        result = parser.key(complex_json, "key_not_in_data")
+        assert result == []
 
     def test_key_empty_key(self, parser, complex_json):
 
@@ -131,7 +135,6 @@ class TestParser:
         except TypeError:
             assert True
 
-    # all_inst_of_key_chain
     def test_key_chain(self, parser, complex_json):
 
         result = parser.key_chain(
@@ -179,6 +182,14 @@ class TestParser:
             )
         except TypeError:
             assert True
+
+    def test_key_chain_key_not_found(self, parser, complex_json):
+
+        result = parser.key_chain(
+                complex_json,
+                ["key_not_in_data"]
+            )
+        assert result == []
 
     def test_key_chain_wildcard(self, parser, complex_json):
 

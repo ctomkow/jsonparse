@@ -116,6 +116,10 @@ class Parser:
 
         while len(keys) >= 1:
 
+            # if key is not found, return empty list
+            if self._queue_size() == 0 and len(keys) >= 1:
+                return []
+
             queue_size_snapshot = self._queue_size()
             key_found = False
 
