@@ -90,9 +90,9 @@ class TestParser:
             }
         ]
 
-    def test_key(self, parser, complex_json):
+    def test_find_key(self, parser, complex_json):
 
-        result = parser.key(complex_json, "id")
+        result = parser.find_key(complex_json, "id")
         assert result == [
             '0003', '5004', '5003', '5002', '5001', '1002',
             '1001', '0002', '5005', '5004', '5003', '5002', '5001', '1001',
@@ -100,44 +100,44 @@ class TestParser:
             '1004', '1003', '1002', '1001'
         ]
 
-    def test_key_not_found(self, parser, complex_json):
+    def test_find_key_not_found(self, parser, complex_json):
 
-        result = parser.key(complex_json, "key_not_in_data")
+        result = parser.find_key(complex_json, "key_not_in_data")
         assert result == []
 
-    def test_key_empty_key(self, parser, complex_json):
+    def test_find_key_empty_key(self, parser, complex_json):
 
         try:
-            parser.key(
+            parser.find_key(
                 complex_json,
                 ""
             )
         except ValueError:
             assert True
 
-    def test_key_not_str_key(self, parser, complex_json):
+    def test_find_key_not_str_key(self, parser, complex_json):
 
         try:
-            parser.key(
+            parser.find_key(
                 complex_json,
                 5
             )
         except TypeError:
             assert True
 
-    def test_key_not_list_or_dict_data(self, parser):
+    def test_find_key_not_list_or_dict_data(self, parser):
 
         try:
-            parser.key(
+            parser.find_key(
                 "string of data",
                 "string"
             )
         except TypeError:
             assert True
 
-    def test_key_chain(self, parser, complex_json):
+    def test_find_key_chain(self, parser, complex_json):
 
-        result = parser.key_chain(
+        result = parser.find_key_chain(
             complex_json,
             [
                 "batters",
@@ -149,30 +149,30 @@ class TestParser:
             'Regular', 'Chocolate', 'Blueberry', "Devil's Food",
             'Regular', 'Regular', 'Chocolate']
 
-    def test_key_chain_empty_key(self, parser, complex_json):
+    def test_find_key_chain_empty_key(self, parser, complex_json):
 
         try:
-            parser.key_chain(
+            parser.find_key_chain(
                 complex_json,
                 [""]
             )
         except ValueError:
             assert True
 
-    def test_key_chain_not_str_key(self, parser, complex_json):
+    def test_find_key_chain_not_str_key(self, parser, complex_json):
 
         try:
-            parser.key_chain(
+            parser.find_key_chain(
                 complex_json,
                 [5]
             )
         except TypeError:
             assert True
 
-    def test_key_chain_not_list_or_dict_data(self, parser):
+    def test_find_key_chain_not_list_or_dict_data(self, parser):
 
         try:
-            parser.key_chain(
+            parser.find_key_chain(
                 "string of data",
                 [
                     "string",
@@ -183,17 +183,17 @@ class TestParser:
         except TypeError:
             assert True
 
-    def test_key_chain_key_not_found(self, parser, complex_json):
+    def test_find_key_chain_key_not_found(self, parser, complex_json):
 
-        result = parser.key_chain(
+        result = parser.find_key_chain(
                 complex_json,
                 ["key_not_in_data"]
             )
         assert result == []
 
-    def test_key_chain_wildcard(self, parser, complex_json):
+    def test_find_key_chain_wildcard(self, parser, complex_json):
 
-        result = parser.key_chain(
+        result = parser.find_key_chain(
             complex_json,
             [
                 "*",
@@ -204,9 +204,9 @@ class TestParser:
                           "5007", "5001", "5002", "5003", "5004", "5005",
                           "5001", "5002", "5003", "5004"]
 
-    def test_key_value(self, parser, complex_json):
+    def test_find_key_value(self, parser, complex_json):
 
-        result = parser.key_value(
+        result = parser.find_key_value(
             complex_json,
             "id",
             "1001"
@@ -216,9 +216,9 @@ class TestParser:
                           {'id': '1001', 'type': 'Regular'},
                           {'id': '1001', 'type': 'Regular'}]
 
-    def test_key_value_not_found(self, parser, complex_json):
+    def test_find_key_value_not_found(self, parser, complex_json):
 
-        result = parser.key_value(
+        result = parser.find_key_value(
             complex_json,
             "id",
             5.4

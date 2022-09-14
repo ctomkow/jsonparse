@@ -1,10 +1,6 @@
 # Craig Tomkow
 #
-# Dynamically parse JSON objects via two main methods...
-#
-# key: find all values of one key (stack based)
-# key_chain: find all values of an ordered key chain (queue based)
-# key_value: find all key:value pairs and return the parent set(s)
+# Dynamically parse JSON objects
 
 # python imports
 from typing import Union
@@ -19,13 +15,13 @@ class Parser:
     __init__(stack_trace, queue_trace):
         Returns the Parser object.
 
-    key(data, key):
+    find_key(data, key):
         Returns a list of values that have the corresponding key.
 
-    key_chain(data, keys):
+    find_key_chain(data, keys):
         Returns a list of values that have the corresponding key chain.
 
-    key_value(data, key, value):
+    find_key_value(data, key, value):
         Returns a list of set(s) that contain the key value pair.
     """
 
@@ -49,7 +45,7 @@ class Parser:
         self.queue_ref = self._queue_init()
 
     # depth first search for all keys using a STACK
-    def key(self, data: Union[dict, list], key: str) -> list:
+    def find_key(self, data: Union[dict, list], key: str) -> list:
         """
         Search JSON data that consists of key:value pairs for all instances of
         provided key. The data can have complex nested dictionaries and lists.
@@ -92,7 +88,7 @@ class Parser:
         return value_list
 
     # breadth first search for ordered series of keys using a QUEUE
-    def key_chain(self, data: Union[dict, list], keys: list) -> list:
+    def find_key_chain(self, data: Union[dict, list], keys: list) -> list:
         """
         Search JSON data that consists of key:value pairs for the first
         instance of provided key chain. The data can have complex nested
@@ -147,10 +143,10 @@ class Parser:
 
         return self.queue_ref
 
-    def key_value(self,
-                  data: Union[dict, list],
-                  key: str,
-                  value: Union[str, int, float, bool]) -> list:
+    def find_key_value(self,
+                       data: Union[dict, list],
+                       key: str,
+                       value: Union[str, int, float, bool]) -> list:
         """
         Search JSON data that consists of key:value pairs for all instances of
         provided key and value pair. The parent set that contains the key:value
