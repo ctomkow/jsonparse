@@ -146,7 +146,7 @@ class Parser:
     def find_key_value(self,
                        data: Union[dict, list],
                        key: str,
-                       value: Union[str, int, float, bool]) -> list:
+                       value: Union[str, int, float, bool, None]) -> list:
         """
         Search JSON data that consists of key:value pairs for all instances of
         provided key and value pair. The parent set that contains the key:value
@@ -254,14 +254,14 @@ class Parser:
     def _stack_all_key_and_value_in_dict(
             self,
             key: str,
-            value: Union[str, int, float, bool],
+            value: Union[str, int, float, bool, None],
             elem: dict) -> bool:
 
         if type(elem) is not dict:
             raise TypeError
         elif type(key) is not str:
             raise TypeError
-        elif not isinstance(value, (str, int, float, bool)):
+        elif not isinstance(value, (str, int, float, bool, type(None))):
             raise TypeError
 
         if len(elem) <= 0:  # don't want an empty dict on the stack
@@ -394,7 +394,7 @@ class Parser:
             self,
             data: Union[dict, list],
             key: str,
-            value: Union[str, int, float, bool]) -> bool:
+            value: Union[str, int, float, bool, None]) -> bool:
 
         if not isinstance(data, (dict, list)):
             raise TypeError
@@ -402,6 +402,6 @@ class Parser:
             raise TypeError
         elif not key:  # if key is an empty string
             raise ValueError
-        elif not isinstance(value, (str, int, float, bool)):
+        elif not isinstance(value, (str, int, float, bool, type(None))):
             raise TypeError
         return True

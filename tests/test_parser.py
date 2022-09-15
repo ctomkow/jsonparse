@@ -70,7 +70,7 @@ class TestParser:
             {
                 "id": "0003",
                 "type": "donut",
-                "exists": True,
+                "exists": None,
                 "ppu": 7,
                 "batters":
                     {
@@ -226,3 +226,33 @@ class TestParser:
         )
 
         assert result == []
+
+    def test_find_key_value_none(self, parser, complex_json):
+
+        result = parser.find_key_value(
+            complex_json,
+            "exists",
+            None
+        )
+
+        assert result == [{
+                "id": "0003",
+                "type": "donut",
+                "exists": None,
+                "ppu": 7,
+                "batters":
+                {
+                    "batter":
+                    [
+                        {"id": "1001", "type": "Lar"},
+                        {"id": "1002", "type": "Chocolate"}
+                    ]
+                },
+                "on_top_thing":
+                [
+                    {"id": "5001", "type": "None"},
+                    {"id": "5002", "type": "Glazed"},
+                    {"id": "5003", "type": "Chocolate"},
+                    {"id": "5004", "type": "Maple"}
+                ]
+            }]

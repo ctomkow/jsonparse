@@ -81,8 +81,8 @@ parser.find_key_value(data, 'chain', 'B')
 
     > Wildcard **'*'** can be used as key(s) to match any.
 
-`find_key_value(data: dict | list, key: str, value: str | int | float | bool) -> list`
+`find_key_value(data: dict | list, key: str, value: str | int | float | bool | NoneType) -> list`
 
 - Provide JSON data as a dictionary or a list, a key as a string,
-  and a value as a string, integer, float, or boolean.
+  and a value as a string, integer, float, boolean, or None.
 - Returns a list of set(s) that contain the key:value pair.
