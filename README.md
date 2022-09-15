@@ -43,10 +43,10 @@ data = [
 
 
 parser.find_key(data, 'chain')
-['B', 'A']
+['A', 'B']
 
 parser.find_key(data, 'key')
-[{'chain': 'B'}, {'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}, 2, 1]
+[1, 2, {'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}, {'chain': 'B'}]
 
 
 parser.find_key_chain(data, ['my', 'key', 'chain'])
