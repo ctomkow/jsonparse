@@ -261,7 +261,7 @@ class Parser:
             raise TypeError
         elif type(key) is not str:
             raise TypeError
-        elif not isinstance(value, Union[str, int, float, bool, None]):
+        elif not isinstance(value, (str, int, float, bool, type(None))):
             raise TypeError
 
         if len(elem) <= 0:  # don't want an empty dict on the stack
@@ -402,6 +402,6 @@ class Parser:
             raise TypeError
         elif not key:  # if key is an empty string
             raise ValueError
-        elif not isinstance(value, Union[str, int, float, bool, None]):
+        elif not isinstance(value, (str, int, float, bool, type(None))):
             raise TypeError
         return True
