@@ -80,7 +80,7 @@ class Parser:
                 value = self._stack_all_key_values_in_dict(key, elem)
                 if value:
                     for v in value:
-                        value_list.append(v)
+                        value_list.insert(0, v)
             else:  # according to RFC 7159, valid JSON can also contain a
                 # string, number, 'false', 'null', 'true'
                 pass  # discard these other values as they don't have a key
@@ -183,7 +183,7 @@ class Parser:
                 self._stack_push_list_elem(elem)
             elif type(elem) is dict:
                 if self._stack_all_key_and_value_in_dict(key, value, elem):
-                    value_list.append(elem)
+                    value_list.insert(0, elem)
             else:  # according to RFC 7159, valid JSON can also contain a
                 # string, number, 'false', 'null', 'true'
                 pass  # discard these other values as they don't have a key

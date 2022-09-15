@@ -29,7 +29,7 @@ class TestParser:
                     {
                         "batter":
                             [
-                                {"id": "1001", "type": "Regular"},
+                                {"id": "1001", "type": "Reg"},
                                 {"id": "1002", "type": "Chocolate"},
                                 {"id": "1003", "type": "Blueberry"},
                                 {"id": "1004", "type": "Devil's Food"}
@@ -55,7 +55,7 @@ class TestParser:
                     {
                         "batter":
                             [
-                                {"id": "1001", "type": "Regular"}
+                                {"id": "1001", "type": "Rul"}
                             ]
                     },
                 "top_stuff":
@@ -76,7 +76,7 @@ class TestParser:
                     {
                         "batter":
                             [
-                                {"id": "1001", "type": "Regular"},
+                                {"id": "1001", "type": "Lar"},
                                 {"id": "1002", "type": "Chocolate"}
                             ]
                     },
@@ -93,12 +93,12 @@ class TestParser:
     def test_find_key(self, parser, complex_json):
 
         result = parser.find_key(complex_json, "id")
+
         assert result == [
-            '0003', '5004', '5003', '5002', '5001', '1002',
-            '1001', '0002', '5005', '5004', '5003', '5002', '5001', '1001',
-            '0001', '5007', '5006', '5005', '5004', '5003', '5002', '5001',
-            '1004', '1003', '1002', '1001'
-        ]
+            '1001', '1002', '1003', '1004', '5001',
+            '5002', '5003', '5004', '5005', '5006', '5007', '0001',
+            '1001', '5001', '5002', '5003', '5004', '5005', '0002',
+            '1001', '1002', '5001', '5002', '5003', '5004', '0003']
 
     def test_find_key_not_found(self, parser, complex_json):
 
@@ -146,8 +146,8 @@ class TestParser:
             ]
         )
         assert result == [
-            'Regular', 'Chocolate', 'Blueberry', "Devil's Food",
-            'Regular', 'Regular', 'Chocolate']
+            'Reg', 'Chocolate', 'Blueberry', "Devil's Food",
+            'Rul', 'Lar', 'Chocolate']
 
     def test_find_key_chain_empty_key(self, parser, complex_json):
 
@@ -212,9 +212,10 @@ class TestParser:
             "1001"
         )
 
-        assert result == [{'id': '1001', 'type': 'Regular'},
-                          {'id': '1001', 'type': 'Regular'},
-                          {'id': '1001', 'type': 'Regular'}]
+        assert result == [
+            {'id': '1001', 'type': 'Reg'},
+            {'id': '1001', 'type': 'Rul'},
+            {'id': '1001', 'type': 'Lar'}]
 
     def test_find_key_value_not_found(self, parser, complex_json):
 
