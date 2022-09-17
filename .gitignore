@@ -7,3 +7,7 @@ build/
 *.egg-info
 .vscode
 dist
+docs/_build
+docs/_static
+docs/_templates
+docs/make.bat
