@@ -1,4 +1,4 @@
-# jsonparse
+# jsonparse: ctrl-f for json
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/jsonparse)
 ![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/ctomkow/jsonparse?label=version&sort=semver)
 [![jsonparse](https://github.com/ctomkow/jsonparse/actions/workflows/jsonparse-buildtest.yml/badge.svg)](https://github.com/ctomkow/jsonparse/actions/workflows/jsonparse-buildtest.yml)
@@ -8,12 +8,12 @@
 
 > **jsonparse** is a simple JSON parsing library. Extract what's needed from key:value pairs.
 
-### Install
-```
+## Install
+```bash
 pip install jsonparse
 ```
 
-### Usage
+## Usage
 ```python
 from jsonparse import Parser
 
@@ -68,21 +68,24 @@ parser.find_key_value(data, 'cable', False)
 parser.find_key_value(data, 'chain', 'B')
 [{'chain': 'B'}]
 ```
-### API
+## API
 `find_key(data: dict | list, key: str) -> list`
  
-- Provide JSON data as a dictionary or a list, as well as the key as a string
-- Returns a list of values that match the corresponding key.
+-  Provide JSON data as a dictionary or a list, as well as the key as a string
+
+-  Returns a list of values that match the corresponding key.
 
 `find_key_chain(data: dict | list, keys: list) -> list`
 
-- Provide JSON data as a dictionary or a list, as well as a list of keys as strings.
-- Returns a list of values that match the corresponding key chain.
+-  Provide JSON data as a dictionary or a list, as well as a list of keys as strings.
 
-    > Wildcard **'*'** can be used as key(s) to match any.
+-  Returns a list of values that match the corresponding key chain.
+
+  > Wildcard **'*'** can be used as key(s) to match any.
 
 `find_key_value(data: dict | list, key: str, value: str | int | float | bool | None) -> list`
 
-- Provide JSON data as a dictionary or a list, a key as a string,
+-  Provide JSON data as a dictionary or a list, a key as a string,
   and a value as a string, integer, float, boolean, or None.
-- Returns a list of set(s) that contain the key:value pair.
+
+-  Returns a list of set(s) that contain the key:value pair.
