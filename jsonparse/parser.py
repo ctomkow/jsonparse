@@ -270,7 +270,7 @@ class Parser:
         if len(elem) <= 0:  # don't want empty list on the stack
             pass
         else:
-            for e in elem:  # TODO: reverse the order of looping through
+            for e in elem:
                 self._stack_push(e)
                 self._stack_trace()
 
