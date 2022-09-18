@@ -55,6 +55,9 @@ parser.find_key(data, 'key')
 parser.find_keys(data, ['rope', 'cable'])
 [[5, False], [7, True]]
 
+parser.find_keys(data, ['cable', 'rope'])
+[[5, False], [7, True]]
+
 
 parser.find_key_chain(data, ['my', 'key', 'chain'])
 ['A']
@@ -78,27 +81,26 @@ parser.find_key_value(data, 'chain', 'B')
 ## API
 `find_key(data: dict | list, key: str) -> list`
  
--  Provide JSON data as a dictionary or a list, as well as the key as a string
+-  Provide JSON data as a dictionary or a list. The key to be found is a string.
 
 -  Returns a list of values that match the corresponding key.
 
 `find_keys(data: dict | list, keys: list) -> list`
 
--  Provide JSON data as a dictionary or a list, as well as a list of keys
+-  Provide JSON data as a dictionary or a list. The keys are a list of strings. The order of the keys does not matter.
 
--  Returns a two dimensional list of values matching the keys
+-  Returns a two dimensional list of values matching the keys. The order of values is returned in the same order as the original data.
 
 `find_key_chain(data: dict | list, keys: list) -> list`
 
--  Provide JSON data as a dictionary or a list, as well as a list of keys as strings.
+-  Provide JSON data as a dictionary or a list. The key chain is a list of keys that are all strings. The order of the keys **does** matter.
 
--  Returns a list of values that match the corresponding key chain.
+-  Returns a list of values that match the corresponding key chain. The order of values is returned in the same order as the original data.
 
   > Wildcard **'*'** can be used as key(s) to match any.
 
 `find_key_value(data: dict | list, key: str, value: str | int | float | bool | None) -> list`
 
--  Provide JSON data as a dictionary or a list, a key as a string,
-  and a value as a string, integer, float, boolean, or None.
+-  Provide JSON data as a dictionary or a list. The key is a string. The value is a string, integer, float, boolean, or None.
 
--  Returns a list of set(s) that contain the key:value pair.
+-  Returns a list of dictionaries that contain the key:value pair.
