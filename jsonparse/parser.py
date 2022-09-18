@@ -18,6 +18,9 @@ class Parser:
     find_key(data, key):
         Returns a list of values that have the corresponding key.
 
+    find_keys(data, keys)
+        Returns a two dimentional list of values that match the list of keys.
+
     find_key_chain(data, keys):
         Returns a list of values that have the corresponding key chain.
 
@@ -44,7 +47,6 @@ class Parser:
         self.stack_ref = self._stack_init()
         self.queue_ref = self._queue_init()
 
-    # depth first search for all keys using a STACK
     def find_key(self, data: Union[dict, list], key: str) -> list:
         """
         Search JSON data that consists of key:value pairs for all instances of
@@ -87,7 +89,48 @@ class Parser:
 
         return value_list
 
-    # breadth first search for ordered series of keys using a QUEUE
+    def find_keys(self, data: Union[dict, list], keys: list) -> list:
+        """
+        Search JSON data that consists of key:value pairs for all instances of
+        provided keys. The data can have complex nested dictionaries and lists.
+        If duplicate keys exist in the data (at any layer) all matching key
+        values will be returned. Each instance of matching keys within a
+        dictionary will be returned as a list. The final return value is a
+        two dimensional list.
+
+        Keyword arguments:
+
+        data -- The python object representing JSON data with key:value pairs.
+                This could be a dictionary or a list.
+        keys  -- The keys that will be searched for in the JSON data.
+                The keys argument is a list of dictionary keys.
+        """
+
+        if not self._valid_keys_input(data, keys):
+            raise
+
+        self.stack_ref = self._stack_init()  # init a new stack every request
+        self._stack_push(data)
+        self._stack_trace()
+
+        value_list = []
+
+        while self._stack_size() >= 1:
+
+            elem = self._stack_pop()
+
+            if type(elem) is list:
+                self._stack_push_list_elem(elem)
+            elif type(elem) is dict:
+                value = self._stack_all_keys_values_in_dict(keys, elem)
+                if value:
+                    value_list.insert(0, value)
+            else:  # according to RFC 7159, valid JSON can also contain a
+                # string, number, 'false', 'null', 'true'
+                pass  # discard these other values as they don't have a key
+
+        return value_list
+
     def find_key_chain(self, data: Union[dict, list], keys: list) -> list:
         """
         Search JSON data that consists of key:value pairs for the first
@@ -227,7 +270,7 @@ class Parser:
         if len(elem) <= 0:  # don't want empty list on the stack
             pass
         else:
-            for e in elem:
+            for e in elem:  # TODO: reverse the order of looping through
                 self._stack_push(e)
                 self._stack_trace()
 
@@ -249,6 +292,29 @@ class Parser:
                 else:
                     self._stack_push(elem[e])
                     self._stack_trace()
+        return value_list
+
+    def _stack_all_keys_values_in_dict(self, keys: list, elem: dict) -> list:
+
+        value_list = []
+
+        if type(elem) is not dict:
+            raise TypeError
+        elif type(keys) is not list:
+            raise TypeError
+
+        if len(elem) <= 0:  # don't want an empty dict on the stack
+            pass
+        else:
+            for e in elem:
+                pushed = False
+                for k in keys:
+                    if e == k:
+                        value_list.append(elem[e])
+                    elif not pushed:
+                        self._stack_push(elem[e])
+                        self._stack_trace()
+                        pushed = True
         return value_list
 
     def _stack_all_key_and_value_in_dict(
@@ -369,6 +435,19 @@ class Parser:
         elif not isinstance(key, str):
             raise TypeError
         elif not key:  # if key is an empty string
+            raise ValueError
+        return True
+
+    def _valid_keys_input(
+            self,
+            data: Union[dict, list],
+            keys: list) -> bool:
+
+        if not isinstance(data, (dict, list)):
+            raise TypeError
+        elif not isinstance(keys, list):
+            raise TypeError
+        elif not keys:  # if keys is an empty list
             raise ValueError
         return True
 

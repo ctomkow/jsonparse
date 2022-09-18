@@ -35,7 +35,10 @@ data = [
     {"your":
     	{"key":
     		{
-                "chain": "B"
+                "chain": "B",
+                "rope": 7,
+                "string": 0.7,
+                "cable": True
             }
     	}
     }
@@ -46,7 +49,11 @@ parser.find_key(data, 'chain')
 ['A', 'B']
 
 parser.find_key(data, 'key')
-[1, 2, {'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}, {'chain': 'B'}]
+[1, 2, {'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}, {'chain': 'B', 'rope': 7, 'string': 0.7, 'cable': True}]
+
+
+parser.find_keys(data, ['rope', 'cable'])
+[[5, False], [7, True]]
 
 
 parser.find_key_chain(data, ['my', 'key', 'chain'])
@@ -59,14 +66,14 @@ parser.find_key_chain(data, ['*', 'key', 'chain'])
 ['A', 'B']
 
 parser.find_key_chain(data, ['*', 'key', '*'])
-['A', 5, 1.2, False, 'B']
+['A', 5, 1.2, False, 'B', 7, 0.7, True]
 
 
 parser.find_key_value(data, 'cable', False)
 [{'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}]
 
 parser.find_key_value(data, 'chain', 'B')
-[{'chain': 'B'}]
+[{'chain': 'B', 'rope': 7, 'string': 0.7, 'cable': True}]
 ```
 ## API
 `find_key(data: dict | list, key: str) -> list`
@@ -74,6 +81,12 @@ parser.find_key_value(data, 'chain', 'B')
 -  Provide JSON data as a dictionary or a list, as well as the key as a string
 
 -  Returns a list of values that match the corresponding key.
+
+`find_keys(data: dict | list, keys: list) -> list`
+
+-  Provide JSON data as a dictionary or a list, as well as a list of keys
+
+-  Returns a two dimensional list of values matching the keys
 
 `find_key_chain(data: dict | list, keys: list) -> list`
 

@@ -32,7 +32,8 @@ class TestParser:
                                 {"id": "1001", "type": "Reg"},
                                 {"id": "1002", "type": "Chocolate"},
                                 {"id": "1003", "type": "Blueberry"},
-                                {"id": "1004", "type": "Devil's Food"}
+                                {"id": "1004", "type": "Devil's Food"},
+                                {"start": 5, "end": 8}
                             ]
                     },
                 "topping":
@@ -44,7 +45,9 @@ class TestParser:
                         {"id": "5005", "type": "Chocolate with Sprinkles"},
                         {"id": "5006", "type": "Chocolate"},
                         {"id": "5007", "type": "Maple"}
-                    ]
+                    ],
+                "start": 22,
+                "end": 99
             },
             {
                 "id": "0002",
@@ -65,7 +68,9 @@ class TestParser:
                         {"id": "5003", "type": "Sugar"},
                         {"id": "5004", "type": "Chocolate"},
                         {"id": "5005", "type": "Maple"}
-                    ]
+                    ],
+                "start": 1,
+                "end": 9
             },
             {
                 "id": "0003",
@@ -86,7 +91,9 @@ class TestParser:
                         {"id": "5002", "type": "Glazed"},
                         {"id": "5003", "type": "Chocolate"},
                         {"id": "5004", "type": "Maple"}
-                    ]
+                    ],
+                "start": 4,
+                "end": 7
             }
         ]
 
@@ -254,5 +261,34 @@ class TestParser:
                     {"id": "5002", "type": "Glazed"},
                     {"id": "5003", "type": "Chocolate"},
                     {"id": "5004", "type": "Maple"}
-                ]
+                ],
+                "start": 4,
+                "end": 7
             }]
+
+    def test_find_keys(self, parser, complex_json):
+
+        result = parser.find_keys(
+            complex_json,
+            ['start', 'end']
+        )
+
+        assert result == [[5, 8], [22, 99], [1, 9], [4, 7]]
+
+    def test_find_keys_not_found(self, parser, complex_json):
+
+        result = parser.find_keys(
+            complex_json,
+            ['key_does_not_exist', 'neither_does_this_one']
+        )
+
+        assert result == []
+
+    def test_find_keys_one_not_found(self, parser, complex_json):
+
+        result = parser.find_keys(
+            complex_json,
+            ['exists', 'key_does_not_exist', 'ppu']
+        )
+
+        assert result == [[True, 0.55], [False, 42], [None, 7]]
