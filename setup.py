@@ -42,7 +42,7 @@ setup(
           'Programming Language :: Python :: 3.10',
         ],
         extras_require={
-          'api': [
+          'webapi': [
                         'flask>=2.2.2,<3.0.0',
                         'gunicorn>=20.1.0,<21.0.0'
                      ]

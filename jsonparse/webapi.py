@@ -1,7 +1,7 @@
 # Craig Tomkow
 # 2022-09-18
 #
-# Web api. Decorators that wrap the Parser methods
+# Web api. Decorated functions that call the Parser methods
 
 # local imports
 from .parser import Parser
@@ -10,7 +10,7 @@ from .parser import Parser
 import json
 
 # 3rd party imports
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 
 app = Flask(__name__)
@@ -22,48 +22,75 @@ app = Flask(__name__)
 
 
 # accept a singular key
+# /v1/key/mykey
 @app.post('/v1/key/<path:key>')  # use path as key might have a slash
 def _find_key(key: str):
-
-    # TODO: try except clause
-    values = Parser().find_key(request.json, key)
+    print(key)
+    try:
+        values = Parser().find_key(request.json, key)
+    except TypeError:
+        return (jsonify(error="key must be a string"), 400)
+    except ValueError:
+        return (jsonify(error="key cannot be empty"), 400)
     return values
 
 
-# accept a comma delimited list of keys
-@app.post('/v1/keys/<path:keys>')
-def _find_keys(keys: str):
+# query parameters of keys
+# /v1/keys?key=first&key=second&key=third
+@app.post('/v1/keys')
+def _find_keys():
 
-    # TODO: validation
-    keys_list = keys.split(',')
+    keys = request.args.getlist('key')
+    if not keys:
+        return (jsonify(error="parameter key incorrect"), 400)
 
-    # TODO: try except clause
-    values = Parser().find_keys(request.json, keys_list)
+    try:
+        values = Parser().find_keys(request.json, keys)
+    except TypeError:
+        return (jsonify(error="key must be a string"), 400)
+    except ValueError:
+        return (jsonify(error="key cannot be empty"), 400)
     return values
 
 
-# accept comma delimited list of keys
-@app.post('/v1/keychain/<path:key_chain>')
-def _find_key_chain(key_chain: str):
+# query parameters of keys
+# /v1/keychain?key=first&key=second&key=third
+@app.post('/v1/keychain')
+def _find_key_chain():
 
-    # TODO: validation
-    key_chain_list = key_chain.split(',')
+    key_chain = request.args.getlist('key')
+    if not key_chain:
+        return (jsonify(error="parameter key incorrect"), 400)
 
-    # TODO: try except clause
-    values = Parser().find_key_chain(request.json, key_chain_list)
+    try:
+        values = Parser().find_key_chain(request.json, key_chain)
+    except TypeError:
+        return (jsonify(error="key must be a string"), 400)
+    except ValueError:
+        return (jsonify(error="key cannot be empty"), 400)
     return values
 
 
-# TODO: currently the value specificed has to be valid json, gotta think about
-#       what is best to accept for the value type...
-# accept comma delimited key value pair
-@app.post('/v1/keyvalue/<path:key_value>')
-def _find_key_value(key_value: str):
+# query parameters for key and value
+# /v1/keyvalue?key=mykey&value="myvalue"
+@app.post('/v1/keyvalue')
+def _find_key_value():
 
-    # TODO: validation
-    key = key_value.split(',')[0]
-    value = key_value.split(',')[1]
+    key = request.args.get('key')
+    value = request.args.get('value')
 
-    # TODO: try except clause
-    values = Parser().find_key_value(request.json, key, json.loads(value))
+    if not key or not value:
+        return (jsonify(error="key or value parameter missing"), 400)
+
+    try:
+        value = json.loads(value)
+    except json.JSONDecodeError:
+        return (jsonify(error="value must be valid json"), 400)
+
+    try:
+        values = Parser().find_key_value(request.json, key, value)
+    except TypeError:
+        return (jsonify(error="key must be a string"), 400)
+    except ValueError:
+        return (jsonify(error="key cannot be empty"), 400)
     return values
