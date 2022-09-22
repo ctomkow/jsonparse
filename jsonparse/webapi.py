@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Craig Tomkow
 # 2022-09-18
 #
