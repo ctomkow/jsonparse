@@ -17,7 +17,7 @@ with open("README.md", "r", "utf-8") as f:
 
 # Package meta-data.
 NAME = 'jsonparse'
-DESCRIPTION = 'Search through JSON data key:values by key(s)'
+DESCRIPTION = 'Search through JSON data key:values'
 URL = url = 'https://github.com/ctomkow/jsonparse'
 EMAIL = 'ctomkow@gmail.com'
 AUTHOR = 'Craig Tomkow'
@@ -41,6 +41,12 @@ setup(
           'Programming Language :: Python :: 3.9',
           'Programming Language :: Python :: 3.10',
         ],
+        extras_require={
+          'webapi': [
+                        'flask>=2.2.2,<3.0.0',
+                        'gunicorn>=20.1.0,<21.0.0'
+                    ]
+        },
         package_data={
             'jsonparse': ['VERSION']
         }
