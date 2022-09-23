@@ -21,4 +21,4 @@ ENV PATH "$PATH:/home/nonroot/.local/bin"
 COPY --from=build /dist/jsonparse-${VERSION}-py3-none-any.whl ./
 RUN pip install --user jsonparse-${VERSION}-py3-none-any.whl[webapi]
 
-CMD ["gunicorn"  , "-b", "0.0.0.0:8000", "jsonparse.webapi:app"]
+CMD ["sh", "-c", "exec gunicorn -b 0.0.0.0:${PORT:-8000} jsonparse.webapi:app"]
