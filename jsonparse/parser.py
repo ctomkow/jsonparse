@@ -89,7 +89,7 @@ class Parser:
 
         return value_list
 
-    def find_keys(self, data: Union[dict, list], keys: list) -> list:
+    def find_keys(self, data: Union[dict, list], keys: list, group: bool = True) -> list:
         """
         Search JSON data that consists of key:value pairs for all instances of
         provided keys. The data can have complex nested dictionaries and lists.
@@ -106,7 +106,7 @@ class Parser:
                 The keys argument is a list of dictionary keys.
         """
 
-        if not self._valid_keys_input(data, keys):
+        if not self._valid_keys_input(data, keys, group):
             raise
 
         self.stack_ref = self._stack_init()  # init a new stack every request
@@ -123,8 +123,11 @@ class Parser:
                 self._stack_push_list_elem(elem)
             elif type(elem) is dict:
                 value = self._stack_all_keys_values_in_dict(keys, elem)
-                if value:
+                if value and group:
                     value_list.insert(0, value)
+                elif value and not group:
+                    for e in value:
+                        value_list.insert(0, e)
             else:  # according to RFC 7159, valid JSON can also contain a
                 # string, number, 'false', 'null', 'true'
                 pass  # discard these other values as they don't have a key
@@ -441,7 +444,8 @@ class Parser:
     def _valid_keys_input(
             self,
             data: Union[dict, list],
-            keys: list) -> bool:
+            keys: list,
+            group: bool) -> bool:
 
         if not isinstance(data, (dict, list)):
             raise TypeError
@@ -449,6 +453,8 @@ class Parser:
             raise TypeError
         elif not keys:  # if keys is an empty list
             raise ValueError
+        elif not isinstance(group, bool):
+            raise TypeError
         return True
 
     def _valid_key_chain_input(

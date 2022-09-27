@@ -275,6 +275,16 @@ class TestParser:
 
         assert result == [[5, 8], [22, 99], [1, 9], [4, 7]]
 
+    def test_find_keys_no_group(self, parser, complex_json):
+
+        result = parser.find_keys(
+            complex_json,
+            ['start', 'end'],
+            group=False
+        )
+        breakpoint()
+        assert result == [5, 8, 22, 99, 1, 9, 4, 7]
+
     def test_find_keys_not_found(self, parser, complex_json):
 
         result = parser.find_keys(
