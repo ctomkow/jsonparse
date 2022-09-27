@@ -55,8 +55,8 @@ parser.find_key(data, 'key')
 parser.find_keys(data, ['rope', 'cable'])
 [[5, False], [7, True]]
 
-parser.find_keys(data, ['cable', 'rope'])
-[[5, False], [7, True]]
+parser.find_keys(data, ['rope', 'cable'], group=False)
+[5, False, 7, True]
 
 
 parser.find_key_chain(data, ['my', 'key', 'chain'])
@@ -85,11 +85,13 @@ parser.find_key_value(data, 'chain', 'B')
 
 -  Returns a list of values that match the corresponding key.
 
-`find_keys(data: dict | list, keys: list) -> list`
+`find_keys(data: dict | list, keys: list, group: bool = True) -> list`
 
 -  Provide JSON data as a dictionary or a list. The keys are a list of strings. The order of the keys does not matter.
 
 -  Returns a two dimensional list of values matching the keys. The order of values is returned in the same order as the original data.
+
+-  To return a one dimensional list, pass the keyword parameter group=False
 
 `find_key_chain(data: dict | list, keys: list) -> list`
 
