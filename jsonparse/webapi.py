@@ -29,14 +29,16 @@ def _find_key(key: str):
 
 
 # query parameters of keys
-# /v1/keys?key=first&key=second&key=third
+# /v1/keys?key=first&key=second&key=third&group=False
 @app.post('/v1/keys')
 def _find_keys():
 
     # validate parameter keys
     param_keys = request.args.keys()
+    if not param_keys:
+        return (jsonify(error="parameter key incorrect"), 400)
     for k in param_keys:
-        if k != 'key':
+        if (k != 'key') and (k != 'group'):
             return (jsonify(error="parameter key incorrect"), 400)
 
     keys = request.args.getlist('key')
@@ -46,7 +48,15 @@ def _find_keys():
         elif not key:
             return (jsonify(error="key must not be empty"), 400)
 
-    return Parser().find_keys(request.json, keys)
+    group = request.args.get('group')
+    if not group:
+        group_status = True
+    elif group.lower() == 'false':
+        group_status = False
+    else:
+        group_status = True
+
+    return Parser().find_keys(request.json, keys, group_status)
 
 
 # query parameters of keys

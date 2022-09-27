@@ -50,6 +50,14 @@ def test_keys(client, data):
     assert response.status_code == 200
 
 
+def test_keys_with_group(client, data):
+
+    response = client.post(
+        "/v1/keys?key=exists&key=ppu&group=False",
+        json=data)
+    assert response.status_code == 200
+
+
 def test_keys_empty_param_key(client, data):
 
     response = client.post("/v1/keys?key=", json=data)
@@ -59,6 +67,12 @@ def test_keys_empty_param_key(client, data):
 def test_keys_bad_params_key(client, data):
 
     response = client.post("/v1/keys?key=a&notkey=b&key=c", json=data)
+    assert response.status_code == 400
+
+
+def test_keys_no_params(client, data):
+
+    response = client.post("/v1/keys?", json=data)
     assert response.status_code == 400
 
 
