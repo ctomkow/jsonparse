@@ -170,22 +170,58 @@ p.find_key_value(data, 'chain', 'B')
 [{'chain': 'B', 'rope': 7, 'string': 0.7, 'cable': True}]
 ```
 
-<!--
 # Web API
+If you want to use a jsonparse web API, currently you can host it yourself.
 
-## Install
+## Install + Run
 ```bash
-pip install "jsonparse[webapi]>=0.11.0"
-```
+pip install "jsonparse[webapi]"
 
-## Quickstart
-
-```bash
 gunicorn -b 0.0.0.0:8000 jsonparse.webapi:app
 ```
-> OR
+
+> Alternatively, run the docker container
 
 ```bash
-docker run -d jsonparse:0.11.0
+docker run -d ctomkow/jsonparse
 ```
+
+
+## Quickstart
+The following quickstart section assumes you are running the web API locally on your machine (127.0.0.1). If the address of where
+the web API is hosted is different (e.g. docker container or external server), change the IP accordingly.
+
+```bash
+curl -X POST "http://127.0.0.1:8000/v1/key/key1" \
+-H 'Content-Type: application/json' \
+-d '[{"key0":{"key1":"result","key2":{"key1":"result1","key3":{"key1":"result2"}}}}]'
+
+["result2","result1","result"]
+```
+
+> OR
+
+```python
+import requests
+
+data = [{
+    "key0":
+    {
+        "key1": "result",
+        "key2":
+        {
+            "key1": "result1",
+            "key3": {"key1": "result2"}
+        }
+    }
+}]
+
+requests.post('http://127.0.0.1:8000/v1/key/key1', json=data).json()
+
+['result2', 'result1', 'result']
+```
+<!--
+## Web API Endpoints
+
+Visit https://api.jsonparse.dev to view the swagger API documentation
 -->
