@@ -13,12 +13,44 @@
 pip install jsonparse
 ```
 
-## Usage
+## Quickstart
+Here is a quick example of what jsonparse is able to do.
+
 ```python
 from jsonparse import Parser
 
-parser = Parser(stack_trace=False, queue_trace=False)
+p = Parser()
 
+data = [{
+    "key0":
+    {
+        "key1": "result",
+        "key2":
+        {
+            "key1": "result1",
+            "key3": {"key1": "result2"}
+        }
+    }
+}]
+
+p.find_key(data, 'key1')
+['result2', 'result1', 'result']
+
+p.find_key_chain(data, ['key0', 'key2', 'key3', 'key1'])
+['result2']
+```
+
+## API
+
+- [Parser class](#parser)
+    - [find_key](#findkey)
+    - [find_keys](#findkeys)
+    - [find_key_chain](#findkeychain)
+    - [find_key_value](#findkeyvalue)
+
+The API examples using the following test data.
+
+```python
 data = [
     {"key": 1},
     {"key": 2},
@@ -34,7 +66,7 @@ data = [
     },
     {"your":
     	{"key":
-    		{
+            {
                 "chain": "B",
                 "rope": 7,
                 "string": 0.7,
@@ -43,66 +75,117 @@ data = [
     	}
     }
 ]
+```
 
+---
 
-parser.find_key(data, 'chain')
+### Parser
+<pre>
+<b>Parser(</b><i>stack_trace</i>: bool = False, <i>queue_trace</i>: bool = False<b>)</b>
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Optionally instantiate the `Parser` class with tracing to print out the underlying data structures.
+
+```python
+p = Parser(stack_trace=True, queue_trace=True)
+```
+
+---
+
+### find_key
+<pre>
+<b>find_key(</b><i>data</i>: dict | list, <i>key</i>: str<b>)</b> -> list
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Will return all values of the matched key.
+
+```python
+p.find_key(data, 'chain')
 ['A', 'B']
 
-parser.find_key(data, 'key')
+p.find_key(data, 'key')
 [1, 2, {'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}, {'chain': 'B', 'rope': 7, 'string': 0.7, 'cable': True}]
+```
 
+---
 
-parser.find_keys(data, ['rope', 'cable'])
+### find_keys
+<pre>
+<b>find_keys(</b><i>data</i>: dict | list, <i>keys</i>: list, <i>group</i>: bool = True<b>)</b> -> list
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;The default return value is a two dimensional list. `[ [], [], ...]`.
+
+&nbsp;&nbsp;&nbsp;&nbsp;To return all values as a one dimensional list, set `group=False`.
+
+&nbsp;&nbsp;&nbsp;&nbsp;The ordering of the keys does not matter.
+
+```python
+p.find_keys(data, ['rope', 'cable'])
 [[5, False], [7, True]]
 
-parser.find_keys(data, ['rope', 'cable'], group=False)
+p.find_keys(data, ['rope', 'cable'], group=False)
 [5, False, 7, True]
+```
 
+---
 
-parser.find_key_chain(data, ['my', 'key', 'chain'])
+### find_key_chain
+<pre>
+<b>find_key_chain(</b><i>data</i>: dict | list, <i>keys</i>: list<b>)</b> -> list
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;The key chain is an ordered list of keys. The chain needs to start at the root level of the nested data.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Wildcard `*` can be used as key(s) to match any.
+
+```python
+p.find_key_chain(data, ['my', 'key', 'chain'])
 ['A']
 
-parser.find_key_chain(data, ['key'])
+p.find_key_chain(data, ['key'])
 [1, 2]
 
-parser.find_key_chain(data, ['*', 'key', 'chain'])
+p.find_key_chain(data, ['*', 'key', 'chain'])
 ['A', 'B']
 
-parser.find_key_chain(data, ['*', 'key', '*'])
+p.find_key_chain(data, ['*', 'key', '*'])
 ['A', 5, 1.2, False, 'B', 7, 0.7, True]
+```
 
+---
 
-parser.find_key_value(data, 'cable', False)
+### find_key_value()
+<pre>
+<b>find_key_value(</b><i>data</i>: dict | list, <i>key</i>: str, <i>value</i>: str | int | float | bool | None) -> list
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;The returned list contains the dictionaries that contain the specified key:value pair.
+
+```python
+p.find_key_value(data, 'cable', False)
 [{'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}]
 
-parser.find_key_value(data, 'chain', 'B')
+p.find_key_value(data, 'chain', 'B')
 [{'chain': 'B', 'rope': 7, 'string': 0.7, 'cable': True}]
 ```
-## API
-`find_key(data: dict | list, key: str) -> list`
- 
--  Provide JSON data as a dictionary or a list. The key to be found is a string.
 
--  Returns a list of values that match the corresponding key.
+<!--
+# Web API
 
-`find_keys(data: dict | list, keys: list, group: bool = True) -> list`
+## Install
+```bash
+pip install "jsonparse[webapi]>=0.11.0"
+```
 
--  Provide JSON data as a dictionary or a list. The keys are a list of strings. The order of the keys does not matter.
+## Quickstart
 
--  Returns a two dimensional list of values matching the keys. The order of values is returned in the same order as the original data.
+```bash
+gunicorn -b 0.0.0.0:8000 jsonparse.webapi:app
+```
+> OR
 
--  To return a one dimensional list, pass the keyword parameter group=False
-
-`find_key_chain(data: dict | list, keys: list) -> list`
-
--  Provide JSON data as a dictionary or a list. The key chain is a list of keys that are all strings. The order of the keys **does** matter.
-
--  Returns a list of values that match the corresponding key chain. The order of values is returned in the same order as the original data.
-
-  > Wildcard **'*'** can be used as key(s) to match any.
-
-`find_key_value(data: dict | list, key: str, value: str | int | float | bool | None) -> list`
-
--  Provide JSON data as a dictionary or a list. The key is a string. The value is a string, integer, float, boolean, or None.
-
--  Returns a list of dictionaries that contain the key:value pair.
+```bash
+docker run -d jsonparse:0.11.0
+```
+-->
