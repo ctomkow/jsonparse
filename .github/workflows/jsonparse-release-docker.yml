@@ -31,5 +31,5 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ctomkow/jsonparse:${{ github.ref_name }}
+          tags: ctomkow/jsonparse:${{ github.ref_name }},ctomkow/jsonparse:latest
           build-args: VERSION=${{ github.ref_name }}
