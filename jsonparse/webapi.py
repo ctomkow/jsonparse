@@ -25,7 +25,7 @@ def _find_key(key: str):
     if not key:
         return (jsonify(error="key must not be empty"), 400)
 
-    return Parser().find_key(request.json, key)
+    return jsonify(Parser().find_key(request.json, key))
 
 
 # query parameters of keys
@@ -56,7 +56,7 @@ def _find_keys():
     else:
         group_status = True
 
-    return Parser().find_keys(request.json, keys, group_status)
+    return jsonify(Parser().find_keys(request.json, keys, group_status))
 
 
 # query parameters of keys
@@ -77,7 +77,7 @@ def _find_key_chain():
         elif not key:
             return (jsonify(error="key must not be empty"), 400)
 
-    return Parser().find_key_chain(request.json, key_chain)
+    return jsonify(Parser().find_key_chain(request.json, key_chain))
 
 
 # query parameters for key and value
@@ -104,4 +104,4 @@ def _find_key_value():
     except json.JSONDecodeError:
         return (jsonify(error="value must be valid json"), 400)
 
-    return Parser().find_key_value(request.json, key, value)
+    return jsonify(Parser().find_key_value(request.json, key, value))
