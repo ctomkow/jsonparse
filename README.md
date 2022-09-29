@@ -155,7 +155,7 @@ p.find_key_chain(data, ['*', 'key', '*'])
 
 ---
 
-### find_key_value()
+### find_key_value
 <pre>
 <b>find_key_value(</b><i>data</i>: dict | list, <i>key</i>: str, <i>value</i>: str | int | float | bool | None) -> list
 </pre>
