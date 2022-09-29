@@ -27,9 +27,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
+        name: Build and push to dockerhub
         uses: docker/build-push-action@v3
         with:
           push: true
           tags: ctomkow/jsonparse:${{ github.ref_name }},ctomkow/jsonparse:latest
           build-args: VERSION=${{ github.ref_name }}
+      -
+        name: push to google compute registry
+        uses: Dayanand-Chinchure/gcr-upload-action@1.2
+        with:
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          source_image: ctomkow/jsonparse:${{ github.ref_name }}
+          destination_image: gcr.io/jsonparse-363219/jsonparse:${{ github.ref_name }}
