@@ -43,10 +43,10 @@ p.find_key_chain(data, ['key0', 'key2', 'key3', 'key1'])
 ## API
 
 - [Parser class](#parser)
-    - [find_key](#findkey)
-    - [find_keys](#findkeys)
-    - [find_key_chain](#findkeychain)
-    - [find_key_value](#findkeyvalue)
+    - [find_key](#find_key)
+    - [find_keys](#find_keys)
+    - [find_key_chain](#find_key_chain)
+    - [find_key_value](#find_key_value)
 
 The API examples using the following test data.
 
