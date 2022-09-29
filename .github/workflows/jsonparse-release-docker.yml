@@ -39,4 +39,4 @@ jobs:
         with:
           service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
           source_image: ctomkow/jsonparse:${{ github.ref_name }}
-          destination_image: gcr.io/jsonparse-363219/jsonparse:${{ github.ref_name }}
+          destination_image: gcr.io/jsonparse-363219/ctomkow/jsonparse:${{ github.ref_name }}
