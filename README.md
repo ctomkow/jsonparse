@@ -170,6 +170,7 @@ p.find_key_value(data, 'chain', 'B')
 [{'chain': 'B', 'rope': 7, 'string': 0.7, 'cable': True}]
 ```
 
+<!--
 # Web API
 If you want to use a jsonparse web API, currently you can host it yourself.
 
@@ -220,7 +221,7 @@ requests.post('http://127.0.0.1:8000/v1/key/key1', json=data).json()
 
 ['result2', 'result1', 'result']
 ```
-<!--
+
 ## Web API Endpoints
 
 Visit https://api.jsonparse.dev to view the swagger API documentation
