@@ -32,3 +32,4 @@ jobs:
         with:
           push: true
           tags: ctomkow/jsonparse:${{ github.ref_name }}
+          build-args: VERSION=${{ github.ref_name }}
