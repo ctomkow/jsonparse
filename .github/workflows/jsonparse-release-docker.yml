@@ -35,11 +35,8 @@ jobs:
           build-args: VERSION=${{ github.ref_name }}
       -
         name: push to google compute registry
-        uses: raccoondev/push-docker-gcr
+        uses: Dayanand-Chinchure/gcr-upload-action@1.2
         with:
-          gcr_host: gcr.io
-          image_name: ctomkow/jsonparse
-          image_tag: latest
-          env:
-            GCLOUD_SERVICE_KEY: ${{ secrets.GCLOUD_SERVICE_KEY }}
-            GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+          source_image: ctomkow/jsonparse:${{ github.ref_name }}
+          destination_image: gcr.io/jsonparse-363219/jsonparse:${{ github.ref_name }}
