@@ -30,11 +30,8 @@ jobs:
         shell: bash
         run: |
           docker login -u _json_key -p '${{ secrets.GCP_SERVICE_ACCOUNT }}' 'https://gcr.io' 2>/dev/null
-          docker tag '${{ inputs.source_image }}' '${{ inputs.destination_image }}'
-          docker push '${{ inputs.destination_image }}'
-          echo "Successfully pushed ${{ inputs.source_image }} to ${{ inputs.destination_image }}"
       -
-        name: Build and push to dockerhub
+        name: Build and push to registries
         uses: docker/build-push-action@v3
         with:
           push: true
