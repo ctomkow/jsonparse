@@ -2,7 +2,7 @@
 import jsonparse
 
 # python imports
-from setuptools import setup
+from setuptools import setup, find_namespace_packages
 import os
 from codecs import open
 
@@ -33,7 +33,6 @@ setup(
         author=AUTHOR,
         author_email=EMAIL,
         license='MIT',
-        packages=['jsonparse'],
         classifiers=[
           'Programming Language :: Python :: 3',
           'Programming Language :: Python :: 3.7',
@@ -47,12 +46,14 @@ setup(
                         'gunicorn>=20.1.0,<21.0.0'
                     ]
         },
+        packages=find_namespace_packages(where="."),
+        package_dir={"": "."},
         package_data={
             'jsonparse': ['VERSION'],
             'jsonparse.static.css': ['*.css'],
             'jsonparse.static.img': ['*.png'],
             'jsonparse.static.js': ['*.js'],
             'jsonparse.static': ['openapi.yaml'],
-            'jsonparse.templates': ['*.html']
-        }
+            'jsonparse.templates': ['*.html'],
+        },
 )
