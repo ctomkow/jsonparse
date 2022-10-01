@@ -11,10 +11,20 @@ from .parser import Parser
 import json
 
 # 3rd party imports
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 
 
 app = Flask(__name__)
+
+
+@app.route('/')
+def get_root():
+    return render_template('index.html')
+
+
+@app.route('/v1/docs')
+def get_docs():
+    return render_template('swaggerui.html')
 
 
 # accept a singular key

@@ -1,0 +1,320 @@
+openapi: 3.0.3
+x-stoplight:
+  id: 6g3mhjix1eebt
+info:
+  title: jsonparse
+  description: 'jsonparse is a simple JSON parsing API. Extract what''s needed from key:value pairs.'
+  contact:
+    name: Github
+    url: 'https://github.com/ctomkow/jsonparse'
+  version: 0.11.0
+servers:
+  - url: 'https://jsonparse.dev/v1'
+tags:
+  - name: jsonparse
+    description: 'Search through JSON data key:values'
+    externalDocs:
+      description: readthedocs
+      url: 'https://jsonparse.readthedocs.io/en/latest/'
+paths:
+  '/key/{key}':
+    post:
+      tags:
+        - jsonparse
+      summary: Find all instances of key
+      description: Find all instances of key
+      parameters:
+        - name: key
+          in: path
+          description: key to be searched for
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: JSON data to be searched
+        content:
+          application/json:
+            schema: {}
+            examples:
+              data:
+                value:
+                  - key: 0
+                    my:
+                      key:
+                        chain: string
+                        rope: 0
+                        string: 0
+                        cable: true
+                    your:
+                      key:
+                        chain: string
+                        rope: 0
+                        string: 0
+                        cable: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                x-examples:
+                  example-1:
+                    - A
+                    - B
+                type: array
+                items: {}
+              examples:
+                found values:
+                  value:
+                    - A
+                    - B
+        '400':
+          description: Key cannot be empty
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    error: key must not be empty
+                properties:
+                  error:
+                    type: object
+              examples:
+                example-1:
+                  value:
+                    error:
+                      key must not be empty
+    parameters:
+      - schema:
+          type: string
+        name: key
+        in: path
+        required: true
+        description: The key to be searched for
+  /keys:
+    post:
+      tags:
+        - jsonparse
+      summary: Find all instances of keys
+      description: Find all instances of keys
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: key
+          description: Any number of query parameter keys to search for
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: group
+          description: Specify false to return a one dimensional list
+      requestBody:
+        description: JSON data to be searched
+        content:
+          application/json:
+            schema: {}
+            examples:
+              data:
+                value:
+                  - key: 0
+                    my:
+                      key:
+                        chain: string
+                        rope: 0
+                        string: 0
+                        cable: true
+                    your:
+                      key:
+                        chain: string
+                        rope: 0
+                        string: 0
+                        cable: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                x-examples:
+                  example-1:
+                    - A
+                    - B
+                type: array
+                items: {}
+              examples:
+                found values:
+                  value:
+                    - - 5
+                      - false
+                    - - 7
+                      - true
+        '400':
+          description: Key cannot be empty
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    error: key must not be empty
+                properties:
+                  error:
+                    type: object
+              examples:
+                example-1:
+                  value:
+                    error:
+                      key must not be empty
+    parameters: []
+  /keychain:
+    post:
+      tags:
+        - jsonparse
+      summary: Find all instances of ordered key chain
+      description: 'Find all instances of ordered key chain'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: key
+          description: Any number of query parameter keys to search for
+          required: true
+      requestBody:
+        description: JSON data to be searched
+        content:
+          application/json:
+            schema: {}
+            examples:
+              data:
+                value:
+                  - key: 0
+                    my:
+                      key:
+                        chain: string
+                        rope: 0
+                        string: 0
+                        cable: true
+                    your:
+                      key:
+                        chain: string
+                        rope: 0
+                        string: 0
+                        cable: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                x-examples:
+                  example-1:
+                    - A
+                    - B
+                type: array
+                items: {}
+              examples:
+                found values:
+                  value:
+                    - A
+                    - B
+        '400':
+          description: Key cannot be empty
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    error: key must not be empty
+                properties:
+                  error:
+                    type: object
+              examples:
+                example-1:
+                  value:
+                    error:
+                      key must not be empty
+    parameters: []
+  /keyvalue:
+    post:
+      tags:
+        - jsonparse
+      summary: Find parent object containing key:value pair
+      description: 'Find parent object containing key:value pair'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: key
+          description: 'Provided key of key:value pair'
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: value
+          description: 'Provided value of key:value pair'
+          required: true
+      requestBody:
+        description: JSON data to be searched
+        content:
+          application/json:
+            schema: {}
+            examples:
+              data:
+                value:
+                  - key: 0
+                    my:
+                      key:
+                        chain: string
+                        rope: 0
+                        string: 0
+                        cable: true
+                    your:
+                      key:
+                        chain: string
+                        rope: 0
+                        string: 0
+                        cable: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                x-examples:
+                  example-1:
+                    - A
+                    - B
+                type: array
+                items: {}
+              examples:
+                found values:
+                  value:
+                    - chain: A
+                      rope: 5
+                      string: 1.2
+                      cable: false
+        '400':
+          description: Key cannot be empty
+          content:
+            application/json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    error: key must not be empty
+                properties:
+                  error:
+                    type: object
+              examples:
+                example-1:
+                  value:
+                    error:
+                      key must not be empty
+    parameters: []
+components:
+  schemas: {}
+  securitySchemes: {}
+  requestBodies: {}
