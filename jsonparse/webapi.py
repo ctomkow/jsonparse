@@ -16,9 +16,11 @@ from flask import Flask, request, jsonify, render_template
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def get_root():
     return render_template('index.html')
+
 
 @app.route('/v1/docs')
 def get_docs():
