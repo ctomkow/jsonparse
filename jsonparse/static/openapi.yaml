@@ -7,7 +7,7 @@ info:
   contact:
     name: Github
     url: 'https://github.com/ctomkow/jsonparse'
-  version: 0.11.0
+  version: 0.11.3
 servers:
   - url: 'https://jsonparse.dev/v1'
 tags:
@@ -97,13 +97,13 @@ paths:
       tags:
         - jsonparse
       summary: Find all instances of keys
-      description: Find all instances of keys
+      description: Find all instances of keys. While the swagger interface only shows one query parameter 'key', you can specify as many query 'key' parameters as needed. e.g. /v1/keys?key=first&key=second&key=third&group=false
       parameters:
         - schema:
             type: string
           in: query
           name: key
-          description: Any number of query parameter keys to search for
+          description: Key to search for
           required: true
         - schema:
             type: string
@@ -173,13 +173,13 @@ paths:
       tags:
         - jsonparse
       summary: Find all instances of ordered key chain
-      description: 'Find all instances of ordered key chain'
+      description: Find all instances of ordered key chain. While the swagger interface only shows one query parameter 'key', the key chain can be arbitrarily long by specifying as many 'key' as needed. e.g. /v1/keychain?key=first&key=second&key=third
       parameters:
         - schema:
             type: string
           in: query
           name: key
-          description: Any number of query parameter keys to search for
+          description: First key in key chain
           required: true
       requestBody:
         description: JSON data to be searched
