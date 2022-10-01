@@ -48,6 +48,11 @@ setup(
                     ]
         },
         package_data={
-            'jsonparse': ['VERSION']
+            'jsonparse': ['VERSION'],
+            'jsonparse.static.css': ['*.css'],
+            'jsonparse.static.img': ['*.png'],
+            'jsonparse.static.js': ['*.js'],
+            'jsonparse.static': ['openapi.yaml'],
+            'jsonparse.templates': ['*.html']
         }
 )
