@@ -8,6 +8,11 @@
 
 > **jsonparse** is a simple JSON parsing library. Extract what's needed from key:value pairs.
 
+## What's New
+ - New public (or hostable) [web API](#web-api) :tada:
+
+# Python Library
+
 ## Install
 ```bash
 pip install jsonparse
@@ -170,30 +175,19 @@ p.find_key_value(data, 'chain', 'B')
 [{'chain': 'B', 'rope': 7, 'string': 0.7, 'cable': True}]
 ```
 
-<!--
+
 # Web API
-If you want to use a jsonparse web API, currently you can host it yourself.
 
-## Install + Run
-```bash
-pip install "jsonparse[webapi]"
+## Documentation
 
-gunicorn -b 0.0.0.0:8000 jsonparse.webapi:app
-```
-
-> Alternatively, run the docker container
-
-```bash
-docker run -d ctomkow/jsonparse
-```
+Visit [the swagger API documentation](https://jsonparse.dev/v1/docs)
 
 
 ## Quickstart
-The following quickstart section assumes you are running the web API locally on your machine (127.0.0.1). If the address of where
-the web API is hosted is different (e.g. docker container or external server), change the IP accordingly.
+Let's practice using the public, free-to-use-no-authentication, web API hosted in GCP Cloud Run.
 
 ```bash
-curl -X POST "http://127.0.0.1:8000/v1/key/key1" \
+curl -X POST "https://jsonparse.dev/v1/key/key1" \
 -H 'Content-Type: application/json' \
 -d '[{"key0":{"key1":"result","key2":{"key1":"result1","key3":{"key1":"result2"}}}}]'
 
@@ -217,12 +211,20 @@ data = [{
     }
 }]
 
-requests.post('http://127.0.0.1:8000/v1/key/key1', json=data).json()
+requests.post('https://jsonparse.dev/v1/key/key1', json=data).json()
 
 ['result2', 'result1', 'result']
 ```
 
-## Web API Endpoints
+## Self-Hosted
+```bash
+pip install "jsonparse[webapi]"
 
-Visit https://api.jsonparse.dev to view the swagger API documentation
--->
+gunicorn -b 0.0.0.0:8000 jsonparse.webapi:app
+```
+
+> Alternatively, run the docker container
+
+```bash
+docker run -d ctomkow/jsonparse
+```
