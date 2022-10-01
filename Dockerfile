@@ -1,5 +1,7 @@
 FROM python:3.10.7-bullseye as build
 
+RUN mkdir -p /builddir
+WORKDIR /builddir
 COPY ./ ./
 RUN pip install -r requirements-test.txt
 RUN python -m build
@@ -18,7 +20,8 @@ RUN useradd --uid 1000 --create-home --shell /bin/bash nonroot
 USER nonroot
 ENV PATH "$PATH:/home/nonroot/.local/bin"
 
-COPY --from=build /dist/jsonparse-${VERSION}-py3-none-any.whl ./
+WORKDIR /home/nonroot
+COPY --from=build /builddir/dist/jsonparse-${VERSION}-py3-none-any.whl ./
 RUN pip install --user jsonparse-${VERSION}-py3-none-any.whl[webapi]
 
 CMD ["sh", "-c", "exec gunicorn -b 0.0.0.0:${PORT:-8000} jsonparse.webapi:app"]
