@@ -182,9 +182,20 @@ p.find_key_value(data, 'chain', 'B')
 
 Visit [the swagger API documentation](https://jsonparse.dev/v1/docs)
 
+All endpoints are HTTP POST requests where you include the searchable JSON data in the request body.
+
+### Brief Endpoint Overiew
+```bash
+POST /v1/key/{key}
+POST /v1/keys?key=1&key=2&key=3&key=4...
+POST /v1/keychain?key=1&key=2&key=3&key=4...
+POST /v1/keyvalue?key=a&value=1
+```
 
 ## Quickstart
 Let's practice using the public, free-to-use-no-authentication, web API hosted in GCP Cloud Run.
+
+We are POST'ing the JSON data with curl, requesting to search for the key, 'key1'. The found key values are returned as JSON.
 
 ```bash
 curl -X POST "https://jsonparse.dev/v1/key/key1" \
@@ -194,7 +205,7 @@ curl -X POST "https://jsonparse.dev/v1/key/key1" \
 ["result2","result1","result"]
 ```
 
-> OR
+> OR (using python and requests library)
 
 ```python
 import requests
