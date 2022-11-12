@@ -46,6 +46,11 @@ setup(
                         'gunicorn>=20.1.0,<21.0.0'
                     ]
         },
+        entry_points={
+            'console_scripts': [
+                'jsonparse=jsonparse.cli:entrypoint',
+            ],
+        },
         packages=find_namespace_packages(where="."),
         package_dir={"": "."},
         package_data={
