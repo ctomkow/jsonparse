@@ -21,7 +21,7 @@ DESCRIPTION = 'Search through JSON data key:values'
 URL = url = 'https://github.com/ctomkow/jsonparse'
 EMAIL = 'ctomkow@gmail.com'
 AUTHOR = 'Craig Tomkow'
-REQUIRES_PYTHON = '>=3.7.0'
+REQUIRES_PYTHON = '>=3.6.0'
 
 setup(
         name=NAME,
@@ -35,14 +35,16 @@ setup(
         license='MIT',
         classifiers=[
           'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.6',
           'Programming Language :: Python :: 3.7',
           'Programming Language :: Python :: 3.8',
           'Programming Language :: Python :: 3.9',
           'Programming Language :: Python :: 3.10',
+          'Programming Language :: Python :: 3.11',
         ],
         extras_require={
           'webapi': [
-                        'flask>=2.2.2,<3.0.0',
+                        'flask==2.0.3',
                         'gunicorn>=20.1.0,<21.0.0'
                     ]
         },
