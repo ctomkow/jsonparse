@@ -9,7 +9,8 @@
 > **jsonparse** is a simple JSON parsing library. Extract what's needed from key:value pairs.
 
 ## What's New
- - New public (or hostable) [web API](#web-api) :tada:
+ - [CLI tool](#CLI-tool). Parse json text files or stdin via the command line :tada:
+ - New public (or hostable) [web API](#web-api)
 
 # Python Library
 
@@ -45,7 +46,33 @@ p.find_key_chain(data, ['key0', 'key2', 'key3', 'key1'])
 ['result2']
 ```
 
-## API
+:heavy_plus_sign: See additional documentation in the [API section](#API) below.
+
+
+# CLI tool
+
+## Install
+```bash
+pip install jsonparse
+```
+
+## Quickstart
+Summary of cli commands. For complete information, `jp --help`
+
+Note, `jsonparse` and `jp` are equivalent.
+
+`jp key key1 --file text.json`
+
+`jp keys key1 key2 key3 --file text.json`
+
+`jp key-chain my '*' chain --file text.json`
+
+`jp key-value key1 '"result"' --file text.json`
+
+`echo '{"key1": {"key2": 5}}' | jp key key2`
+
+
+# API
 
 - [Parser class](#parser)
     - [find_key](#find_key)
