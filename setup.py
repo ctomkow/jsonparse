@@ -51,6 +51,7 @@ setup(
         entry_points={
             'console_scripts': [
                 'jsonparse=jsonparse.cli:entrypoint',
+                'jp=jsonparse.cli:entrypoint',
             ],
         },
         packages=find_namespace_packages(where="."),
