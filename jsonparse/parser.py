@@ -3,7 +3,7 @@
 # Dynamically parse JSON objects
 
 # python imports
-from typing import Union
+from typing import Union, Dict, List
 
 
 class Parser:
@@ -29,6 +29,7 @@ class Parser:
     """
 
     def __init__(self,
+                 data: Union[Dict, List] = None,
                  stack_trace: bool = False,
                  queue_trace: bool = False) -> None:
         """
@@ -42,12 +43,13 @@ class Parser:
                        is parsed. This must be a boolean value. Default False.
         """
 
+        self.data = data
         self.stack_trace = stack_trace
         self.queue_trace = queue_trace
         self.stack_ref = self._stack_init()
         self.queue_ref = self._queue_init()
 
-    def find_key(self, data: Union[dict, list], key: str) -> list:
+    def find_key(self, key: str) -> 'Parser':
         """
         Search JSON data that consists of key:value pairs for all instances of
         provided key. The data can have complex nested dictionaries and lists.
@@ -63,11 +65,11 @@ class Parser:
                 The key must be a string.
         """
 
-        if not self._valid_key_input(data, key):
+        if not self._valid_key_input(self.data, key):
             raise
 
         self.stack_ref = self._stack_init()  # init a new queue every request
-        self._stack_push(data)
+        self._stack_push(self.data)
         self._stack_trace()
 
         value_list = []
@@ -87,7 +89,8 @@ class Parser:
                 # string, number, 'false', 'null', 'true'
                 pass  # discard these other values as they don't have a key
 
-        return value_list
+        self.data = value_list
+        return self
 
     def find_keys(self,
                   data: Union[dict, list],
@@ -244,6 +247,13 @@ class Parser:
                 pass  # discard these other values as they don't have a key
 
         return value_list
+
+    def ret(self) -> list:
+        """
+        Return the last result of a find operation.
+        """
+
+        return self.data
 
     # STACK operations
 

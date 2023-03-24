@@ -12,9 +12,9 @@ import pytest
 class TestParser:
 
     @pytest.fixture
-    def parser(self):
+    def parser(self, complex_json):
 
-        return Parser(stack_trace=True, queue_trace=True)
+        return Parser(data=complex_json)
 
     @pytest.fixture
     def complex_json(self):
@@ -99,7 +99,7 @@ class TestParser:
 
     def test_find_key(self, parser, complex_json):
 
-        result = parser.find_key(complex_json, "id")
+        result = parser.find_key("id").ret()
 
         assert result == [
             '1001', '1002', '1003', '1004', '5001',
