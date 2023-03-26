@@ -248,13 +248,6 @@ class Parser:
 
         return value_list
 
-    def ret(self) -> list:
-        """
-        Return the last result of a find operation.
-        """
-
-        return self.data
-
     # STACK operations
 
     def _stack_init(self) -> list:

@@ -14,7 +14,7 @@ class TestParser:
     @pytest.fixture
     def parser(self, complex_json):
 
-        return Parser(data=complex_json)
+        return Parser(complex_json)
 
     @pytest.fixture
     def complex_json(self):
@@ -97,9 +97,9 @@ class TestParser:
             }
         ]
 
-    def test_find_key(self, parser, complex_json):
+    def test_find_key(self, parser):
 
-        result = parser.find_key("id").ret()
+        result = parser.find_key("id").data
 
         assert result == [
             '1001', '1002', '1003', '1004', '5001',
@@ -107,38 +107,30 @@ class TestParser:
             '1001', '5001', '5002', '5003', '5004', '5005', '0002',
             '1001', '1002', '5001', '5002', '5003', '5004', '0003']
 
-    def test_find_key_not_found(self, parser, complex_json):
+    def test_find_key_not_found(self, parser):
 
-        result = parser.find_key(complex_json, "key_not_in_data")
+        result = parser.find_key("key_not_in_data").data
         assert result == []
 
-    def test_find_key_empty_key(self, parser, complex_json):
+    def test_find_key_empty_key(self, parser):
 
         try:
-            parser.find_key(
-                complex_json,
-                ""
-            )
+            parser.find_key("").data
         except ValueError:
             assert True
 
-    def test_find_key_not_str_key(self, parser, complex_json):
+    def test_find_key_not_str_key(self, parser):
 
         try:
-            parser.find_key(
-                complex_json,
-                5
-            )
+            parser.find_key(5).data
         except TypeError:
             assert True
 
-    def test_find_key_not_list_or_dict_data(self, parser):
+    def test_find_key_not_list_or_dict_data(self):
 
+        parser = Parser("string of data")
         try:
-            parser.find_key(
-                "string of data",
-                "string"
-            )
+            parser.find_key("string").data
         except TypeError:
             assert True
 

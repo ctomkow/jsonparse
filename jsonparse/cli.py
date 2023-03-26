@@ -85,7 +85,7 @@ def _parse_input(args: argparse.Namespace) -> None:
         raise SystemExit(0)
 
     if 'KEY' in args:
-        _print(_jsonify(Parser().find_key(data, args.KEY[0])))
+        _print(_jsonify(Parser(data).find_key(args.KEY[0]).data))
     elif 'KEYS' in args:
         _print(_jsonify(Parser().find_keys(data, args.KEYS, group=args.ungroup)))
     elif 'KEYCHAIN' in args:

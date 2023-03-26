@@ -35,7 +35,7 @@ def _find_key(key: str):
     if not key:
         return (jsonify(error="key must not be empty"), 400)
 
-    return jsonify(Parser().find_key(request.json, key))
+    return jsonify(Parser(request.json).find_key(key).data)
 
 
 # query parameters of keys
