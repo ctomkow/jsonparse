@@ -46,7 +46,7 @@ setup(
           'webapi': [
                         'flask==2.0.3',
                         'gunicorn==20.1.0',
-                        'werkzeug==0.16.1',
+                        'werkzeug==2.0.0',
                     ]
         },
         entry_points={
