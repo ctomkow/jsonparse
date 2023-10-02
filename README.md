@@ -23,9 +23,7 @@ pip install jsonparse
 Here is a quick example of what jsonparse is able to do.
 
 ```python
-from jsonparse import Parser
-
-p = Parser()
+from jsonparse import find_key, find_keys, find_key_chain, find_key_value
 
 data = [{
     "key0":
@@ -39,10 +37,10 @@ data = [{
     }
 }]
 
-p.find_key(data, 'key1')
+find_key(data, 'key1')
 ['result2', 'result1', 'result']
 
-p.find_key_chain(data, ['key0', 'key2', 'key3', 'key1'])
+find_key_chain(data, ['key0', 'key2', 'key3', 'key1'])
 ['result2']
 ```
 
