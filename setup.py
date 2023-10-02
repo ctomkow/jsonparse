@@ -44,8 +44,9 @@ setup(
         ],
         extras_require={
           'webapi': [
-                        'flask==3.0.0',
-                        'gunicorn==20.1.0'
+                        'flask==2.0.3',
+                        'gunicorn==20.1.0',
+                        'werkzeug==0.16.1',
                     ]
         },
         entry_points={
