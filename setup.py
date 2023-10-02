@@ -44,7 +44,7 @@ setup(
         ],
         extras_require={
           'webapi': [
-                        'flask==2.0.3',
+                        'flask==3.0.0',
                         'gunicorn==20.1.0'
                     ]
         },
