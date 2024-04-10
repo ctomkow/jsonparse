@@ -21,7 +21,7 @@ class TestCli:
     @pytest.fixture
     def version(self):
 
-        return '0.13.0'
+        return '0.13.1'
 
     def test_read_version(self, version):
 
