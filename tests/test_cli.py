@@ -66,3 +66,12 @@ class TestCli:
 
         with pytest.raises(SystemExit):
             args = cli._parse_input(args)
+
+
+    def test_flags_value(self):
+
+        parser = cli._flags('v0.0.1-test')
+        args = parser.parse_args(['value', '42', '--file', 'tests.json'])
+        args = cli._parse_input(args)
+
+        assert True
