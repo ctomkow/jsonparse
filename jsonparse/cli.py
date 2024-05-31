@@ -39,12 +39,18 @@ def _flags(version: str) -> argparse.ArgumentParser:
 Parse deeply nested json based on key(s) and value(s)
 
 examples
-
+--------
 jsonparse key-chain my key chain --file test.json
 jsonparse key-chain my '*' chain --file test.json
+
 jsonparse key-value mykey 42 --file test.json
 jsonparse key-value mykey '"strValue"' --file test.json
+
 echo '{"mykey": 42}' | jsonparse key mykey
+
+jp value null --file test.json
+jp value 42 --file test.json
+jp value '"strValue"' --file test.json
 """)
 
     # all flags here
@@ -73,6 +79,10 @@ echo '{"mykey": 42}' | jsonparse key mykey
     key_value.add_argument('--file', type=argparse.FileType('r'), nargs='?', default=sys.stdin,
                            help="json file as input")
 
+    value = sub_parser.add_parser('value', description='With no FILE, read standard input.')
+    value.add_argument('VALUE', action='store', type=str, nargs=1, help='Search for value. Must be a valid JSON value. If searching for a string value, ensure it is quoted. Returns all keys with that value')
+    value.add_argument('--file', type=argparse.FileType('r'), nargs='?', default=sys.stdin, help="json file as input")
+
     return parser
 
 
@@ -97,6 +107,13 @@ def _parse_input(args: argparse.Namespace) -> None:
             print('value is not valid json. example valid types: \'"value"\', 5, false, true, null')
             raise SystemExit(0)
         _print(_jsonify(Parser().find_key_value(data, args.KVKEY[0], value)))
+    elif 'VALUE' in args:
+        try:
+            value = _pythonify(args.VALUE[0])
+        except json.decoder.JSONDecodeError:
+            print('value is not valid json. example valid types: \'"value"\', 5, false, true, null')
+            raise SystemExit(0)
+        _print(_jsonify(Parser().find_value(data, value)))
 
 
 def _input(fp: io.TextIOWrapper) -> str:

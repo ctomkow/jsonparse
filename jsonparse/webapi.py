@@ -115,3 +115,18 @@ def _find_key_value():
         return (jsonify(error="value must be valid json"), 400)
 
     return jsonify(Parser().find_key_value(request.json, key, value))
+
+
+# accept a singular value
+# /v1/value/myvalue
+@app.post('/v1/value/<path:value>')
+def _find_value(value: str):
+
+    if not value:
+        return jsonify(error="value must not be empty"), 400
+    try:
+        value = json.loads(value)
+    except json.JSONDecodeError:
+        return jsonify(error="value must be valid json"), 400
+
+    return jsonify(Parser().find_value(request.json, value))

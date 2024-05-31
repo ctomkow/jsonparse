@@ -38,7 +38,7 @@ class TestParser:
                     },
                 "topping":
                     [
-                        {"id": "5001", "type": "None"},
+                        {"id": "5001", "ty": "None"},
                         {"id": "5002", "type": "Glazed"},
                         {"id": "5003", "type": "Sugar"},
                         {"id": "5004", "type": "Powdered Sugar"},
@@ -63,7 +63,7 @@ class TestParser:
                     },
                 "top_stuff":
                     [
-                        {"id": "5001", "type": "None"},
+                        {"id": "5001", "typ": "None"},
                         {"id": "5002", "type": "Glazed"},
                         {"id": "5003", "type": "Sugar"},
                         {"id": "5004", "type": "Chocolate"},
@@ -302,3 +302,18 @@ class TestParser:
         )
 
         assert result == [[True, 0.55], [False, 42], [None, 7]]
+
+    def test_find_value(self, parser, complex_json):
+
+        result = parser.find_value(complex_json, 42)
+        assert result == ['ppu']
+
+    def test_find_value_not_found(self, parser, complex_json):
+
+        result = parser.find_value(complex_json, 0.0001)
+        assert result == []
+
+    def test_find_value_multiple(self, parser, complex_json):
+
+        result = parser.find_value(complex_json, 'None')
+        assert result == ['ty', 'typ', 'type']

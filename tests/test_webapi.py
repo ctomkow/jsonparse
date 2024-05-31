@@ -116,3 +116,27 @@ def test_keyvalue_bad_json_value(client, data):
 
     response = client.post('/v1/keyvalue?key=a&value=A', json=data)
     assert response.status_code == 400
+
+
+def test_value(client, data):
+
+    response = client.post('/v1/value/42', json=data)
+    assert response.status_code == 200
+
+
+def test_value_valid_json_str_value(client, data):
+
+    response = client.post('/v1/value/"a"', json=data)
+    assert response.status_code == 200
+
+
+def test_value_no_value(client, data):
+
+    response = client.post('/v1/value/', json=data)
+    assert response.status_code == 404
+
+
+def test_value_bad_json_value(client, data):
+
+    response = client.post('/v1/value/A', json=data)
+    assert response.status_code == 400
