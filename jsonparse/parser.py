@@ -26,6 +26,10 @@ class Parser:
 
     find_key_value(data, key, value):
         Returns a list of set(s) that contain the key value pair.
+
+    find_value(data, value):
+        Returns a list of key(s) that have the corresponding value.
+
     """
 
     def __init__(self,
@@ -246,7 +250,20 @@ class Parser:
         return value_list
 
     def find_value(self, data: Union[dict, list], value: Union[str, int, float, bool, None]) -> list:
-        # todo: docstrings
+        """
+                Search JSON data that consists of key:value pairs for all instances of
+                provided value, returning the associated key (opposite of find_key). The data can have complex nested dictionaries and lists.
+                If duplicate values exist in the data (at any layer), all associated
+                keys will be returned. Data is parsed using a depth first search
+                with a stack.
+
+                Keyword arguments:
+
+                data -- The python object representing JSON data with key:value pairs.
+                        This could be a dictionary or a list.
+                value  -- The value that will be searched for in the JSON data.
+                        Must be a valid JSON value.
+                """
         if not self._valid_value_input(data, value):
             raise
 

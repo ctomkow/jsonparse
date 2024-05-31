@@ -39,12 +39,16 @@ def _flags(version: str) -> argparse.ArgumentParser:
 Parse deeply nested json based on key(s) and value(s)
 
 examples
-
+--------
 jsonparse key-chain my key chain --file test.json
 jsonparse key-chain my '*' chain --file test.json
+
 jsonparse key-value mykey 42 --file test.json
 jsonparse key-value mykey '"strValue"' --file test.json
+
 echo '{"mykey": 42}' | jsonparse key mykey
+
+jp value null --file test.json
 jp value 42 --file test.json
 jp value '"strValue"' --file test.json
 """)
