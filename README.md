@@ -23,7 +23,7 @@ pip install jsonparse
 Here is a quick example of what jsonparse is able to do.
 
 ```python
-from jsonparse import find_key, find_keys, find_key_chain, find_key_value
+from jsonparse import find_key, find_keys, find_key_chain, find_key_value, find_value
 
 data = [{
     "key0":
@@ -69,6 +69,12 @@ Note, `jsonparse` and `jp` are equivalent.
 
 `echo '{"key1": {"key2": 5}}' | jp key key2`
 
+`jp value null --file text.json`
+
+`jp value 42 --file text.json`
+
+`jp value '"strValue"' --file text.json`
+
 
 # API
 
@@ -77,6 +83,7 @@ Note, `jsonparse` and `jp` are equivalent.
     - [find_keys](#find_keys)
     - [find_key_chain](#find_key_chain)
     - [find_key_value](#find_key_value)
+    - [find_value](#find_value)
 
 The API examples using the following test data.
 
@@ -200,6 +207,22 @@ p.find_key_value(data, 'chain', 'B')
 [{'chain': 'B', 'rope': 7, 'string': 0.7, 'cable': True}]
 ```
 
+---
+
+### find_value
+<pre>
+<b>find_value(</b><i>data</i>: dict | list, <i>value</i>: str | int | float | bool | None<b>)</b> -> list
+</pre>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Will return all keys of the matched value.
+
+```python
+p.find_value(data, 'A')
+['chain']
+
+p.find_value(data, False)
+['cable']
+```
 
 # Web API
 
@@ -215,6 +238,7 @@ POST /v1/key/{key}
 POST /v1/keys?key=1&key=2&key=3&key=4...
 POST /v1/keychain?key=1&key=2&key=3&key=4...
 POST /v1/keyvalue?key=a&value=1
+POST /v1/value/{value}
 ```
 
 ## Quickstart
