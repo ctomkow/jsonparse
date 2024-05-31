@@ -9,8 +9,8 @@
 > **jsonparse** is a simple JSON parsing library. Extract what's needed from key:value pairs.
 
 ## What's New
+ - A new function, [find_value](#find_value), has been added. This function will return all keys of the matched value. :grinning:
  - [CLI tool](#CLI-tool). Parse json text files or stdin via the command line :tada:
- - New public (or hostable) [web API](#web-api)
 
 # Python Library
 

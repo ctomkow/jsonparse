@@ -22,3 +22,8 @@ def find_key_chain(data: Union[dict, list], keys: list) -> list:
 def find_key_value(data: Union[dict, list], key: str, value: Union[str, int, float, bool, None]) -> list:
 
     return Parser().find_key_value(data, key, value)
+
+
+def find_value(data: Union[dict, list], value: Union[str, int, float, bool, None]) -> list:
+
+    return Parser().find_value(data, value)
