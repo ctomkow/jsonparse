@@ -32,18 +32,16 @@ class Parser:
 
     """
 
-    def __init__(self,
-                 stack_trace: bool = False,
-                 queue_trace: bool = False) -> None:
+    def __init__(self, stack_trace: bool = False, queue_trace: bool = False) -> None:
         """
         Instantiates a Parser object used to access the search methods.
 
         Keyword arguments:
 
-        stack_trace -- Set this to get a stdout printout of the stack as data
-                       is parsed. This must be a boolean value. Default False.
-        queue_trace -- Set this to get a stdout printout of the queue as data
-                       is parsed. This must be a boolean value. Default False.
+        stack_trace -- Set this to get a stdout printout of the stack as data is parsed. This must be a boolean value.
+                       Default False.
+        queue_trace -- Set this to get a stdout printout of the queue as data is parsed. This must be a boolean value.
+                       Default False.
         """
 
         self.stack_trace = stack_trace
@@ -52,20 +50,6 @@ class Parser:
         self.queue_ref = self._queue_init()
 
     def find_key(self, data: Union[dict, list], key: str) -> list:
-        """
-        Search JSON data that consists of key:value pairs for all instances of
-        provided key. The data can have complex nested dictionaries and lists.
-        If duplicate keys exist in the data (at any layer) all matching key
-        values will be returned. Data is parsed using a depth first search
-        with a stack.
-
-        Keyword arguments:
-
-        data -- The python object representing JSON data with key:value pairs.
-                This could be a dictionary or a list.
-        key  -- The key that will be searched for in the JSON data.
-                The key must be a string.
-        """
 
         if not self._valid_key_input(data, key):
             raise
@@ -93,31 +77,7 @@ class Parser:
 
         return value_list
 
-    def find_keys(self,
-                  data: Union[dict, list],
-                  keys: list,
-                  group: bool = True) -> list:
-        """
-        Search JSON data that consists of key:value pairs for all instances of
-        provided keys. The data can have complex nested dictionaries and lists.
-        If duplicate keys exist in the data (at any layer) all matching key
-        values will be returned. Each instance of matching keys within a
-        dictionary will be returned as a list. The final return value is a
-        two dimensional list. If a one dimensional list is needed where
-        matched key values of the same dictionaries are not returned as a
-        list, pass the group=False keyword parameter.
-
-        Keyword arguments:
-
-        data -- The python object representing JSON data with key:value pairs.
-                This could be a dictionary or a list.
-        keys  -- The keys that will be searched for in the JSON data.
-                The keys argument is a list of dictionary keys.
-        group -- Determines whether the found values of the same dictionary
-                 will be returned as a list or not. Default is True which
-                 results in a two dimensional list. Pass False to return
-                 a one dimensional list.
-        """
+    def find_keys(self, data: Union[dict, list], keys: list, group: bool = True) -> list:
 
         if not self._valid_keys_input(data, keys, group):
             raise
@@ -148,23 +108,6 @@ class Parser:
         return value_list
 
     def find_key_chain(self, data: Union[dict, list], keys: list) -> list:
-        """
-        Search JSON data that consists of key:value pairs for the first
-        instance of provided key chain. The data can have complex nested
-        dictionaries and lists. If duplicate key chains exist in the data,
-        all key chain values will be returned. The data is parsed using
-        breadth first search using a queue.
-
-        Keyword arguments:
-
-        data -- The python object representing JSON data with key:value pairs.
-                This could be a dictionary or a list.
-        keys -- A list of keys that will be searched for in the JSON data.
-                The first key will be depth 1, second key depth 2, and so on.
-                The ordering of the keys matter.
-                The keys must be strings within a list.
-                A wildcard '*' key(s) can be used to match any.
-        """
 
         if not self._valid_key_chain_input(data, keys):
             raise
@@ -202,28 +145,7 @@ class Parser:
 
         return self.queue_ref
 
-    def find_key_value(self,
-                       data: Union[dict, list],
-                       key: str,
-                       value: Union[str, int, float, bool, None]) -> list:
-        """
-        Search JSON data that consists of key:value pairs for all instances of
-        provided key and value pair. The parent set that contains the key:value
-        pair will be returned. The data can have complex nested
-        dictionaries and lists. If duplicate key and value pairs exist in
-        the data (at any layer) all matching key and value pair set(s)
-        that contain the key:value pair will be returned. Data is parsed
-        using a depth first search with a stack.
-
-        Keyword arguments:
-
-        data -- The python object representing JSON data with key:value pairs.
-                This could be a dictionary or a list.
-        key  -- The key that will be searched for in the JSON data.
-                The key must be a string.
-        value -- The value that will be searched for in the JSON data.
-                 The value must be a string, integer, float, or boolean.
-        """
+    def find_key_value(self, data: Union[dict, list], key: str, value: Union[str, int, float, bool, None]) -> list:
 
         if not self._valid_key_value_input(data, key, value):
             raise
@@ -250,20 +172,7 @@ class Parser:
         return value_list
 
     def find_value(self, data: Union[dict, list], value: Union[str, int, float, bool, None]) -> list:
-        """
-                Search JSON data that consists of key:value pairs for all instances of
-                provided value, returning the associated key (opposite of find_key). The data can have complex nested dictionaries and lists.
-                If duplicate values exist in the data (at any layer), all associated
-                keys will be returned. Data is parsed using a depth first search
-                with a stack.
 
-                Keyword arguments:
-
-                data -- The python object representing JSON data with key:value pairs.
-                        This could be a dictionary or a list.
-                value  -- The value that will be searched for in the JSON data.
-                        Must be a valid JSON value.
-                """
         if not self._valid_value_input(data, value):
             raise
 
@@ -288,7 +197,6 @@ class Parser:
                 pass  # discard these other values as they don't have a key
 
         return key_list
-
 
     # STACK operations
 
@@ -374,11 +282,7 @@ class Parser:
                         pushed = True
         return value_list
 
-    def _stack_all_key_and_value_in_dict(
-            self,
-            key: str,
-            value: Union[str, int, float, bool, None],
-            elem: dict) -> bool:
+    def _stack_all_key_and_value_in_dict(self, key: str, value: Union[str, int, float, bool, None], elem: dict) -> bool:
 
         if type(elem) is not dict:
             raise TypeError
@@ -500,10 +404,7 @@ class Parser:
 
     # Input validation
 
-    def _valid_key_input(
-            self,
-            data: Union[dict, list],
-            key: str) -> bool:
+    def _valid_key_input(self, data: Union[dict, list], key: str) -> bool:
 
         if not isinstance(data, (dict, list)):
             raise TypeError
@@ -513,11 +414,7 @@ class Parser:
             raise ValueError
         return True
 
-    def _valid_keys_input(
-            self,
-            data: Union[dict, list],
-            keys: list,
-            group: bool) -> bool:
+    def _valid_keys_input(self, data: Union[dict, list], keys: list, group: bool) -> bool:
 
         if not isinstance(data, (dict, list)):
             raise TypeError
@@ -529,10 +426,7 @@ class Parser:
             raise TypeError
         return True
 
-    def _valid_key_chain_input(
-            self,
-            data: Union[dict, list],
-            keys: list) -> bool:
+    def _valid_key_chain_input(self, data: Union[dict, list], keys: list) -> bool:
 
         if not isinstance(data, (dict, list)):
             raise TypeError
@@ -547,10 +441,7 @@ class Parser:
 
         return True
 
-    def _valid_key_value_input(
-            self,
-            data: Union[dict, list],
-            key: str,
+    def _valid_key_value_input(self, data: Union[dict, list], key: str,
             value: Union[str, int, float, bool, None]) -> bool:
 
         if not isinstance(data, (dict, list)):

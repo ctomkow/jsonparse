@@ -80,7 +80,7 @@ Note, `jsonparse` and `jp` are equivalent.
 
 # API
 
-- [Parser class](#parser)
+- [jsonparse functions](#Functions)
     - [find_key](#find_key)
     - [find_keys](#find_keys)
     - [find_key_chain](#find_key_chain)
@@ -118,15 +118,10 @@ data = [
 
 ---
 
-### Parser
-<pre>
-<b>Parser(</b><i>stack_trace</i>: bool = False, <i>queue_trace</i>: bool = False<b>)</b>
-</pre>
-
-&nbsp;&nbsp;&nbsp;&nbsp;Optionally instantiate the `Parser` class with tracing to print out the underlying data structures.
+### Functions
 
 ```python
-p = Parser(stack_trace=True, queue_trace=True)
+from jsonparse import find_key, find_keys, find_key_chain, find_key_value, find_value
 ```
 
 ---
@@ -139,10 +134,10 @@ p = Parser(stack_trace=True, queue_trace=True)
 &nbsp;&nbsp;&nbsp;&nbsp;Will return all values of the matched key.
 
 ```python
-p.find_key(data, 'chain')
+find_key(data, 'chain')
 ['A', 'B']
 
-p.find_key(data, 'key')
+find_key(data, 'key')
 [1, 2, {'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}, {'chain': 'B', 'rope': 7, 'string': 0.7, 'cable': True}]
 ```
 
@@ -160,10 +155,10 @@ p.find_key(data, 'key')
 &nbsp;&nbsp;&nbsp;&nbsp;The ordering of the keys does not matter.
 
 ```python
-p.find_keys(data, ['rope', 'cable'])
+find_keys(data, ['rope', 'cable'])
 [[5, False], [7, True]]
 
-p.find_keys(data, ['rope', 'cable'], group=False)
+find_keys(data, ['rope', 'cable'], group=False)
 [5, False, 7, True]
 ```
 
@@ -179,16 +174,16 @@ p.find_keys(data, ['rope', 'cable'], group=False)
 &nbsp;&nbsp;&nbsp;&nbsp;Wildcard `*` can be used as key(s) to match any.
 
 ```python
-p.find_key_chain(data, ['my', 'key', 'chain'])
+find_key_chain(data, ['my', 'key', 'chain'])
 ['A']
 
-p.find_key_chain(data, ['key'])
+find_key_chain(data, ['key'])
 [1, 2]
 
-p.find_key_chain(data, ['*', 'key', 'chain'])
+find_key_chain(data, ['*', 'key', 'chain'])
 ['A', 'B']
 
-p.find_key_chain(data, ['*', 'key', '*'])
+find_key_chain(data, ['*', 'key', '*'])
 ['A', 5, 1.2, False, 'B', 7, 0.7, True]
 ```
 
@@ -202,10 +197,10 @@ p.find_key_chain(data, ['*', 'key', '*'])
 &nbsp;&nbsp;&nbsp;&nbsp;The returned list contains the dictionaries that contain the specified key:value pair.
 
 ```python
-p.find_key_value(data, 'cable', False)
+find_key_value(data, 'cable', False)
 [{'chain': 'A', 'rope': 5, 'string': 1.2, 'cable': False}]
 
-p.find_key_value(data, 'chain', 'B')
+find_key_value(data, 'chain', 'B')
 [{'chain': 'B', 'rope': 7, 'string': 0.7, 'cable': True}]
 ```
 
@@ -219,10 +214,10 @@ p.find_key_value(data, 'chain', 'B')
 &nbsp;&nbsp;&nbsp;&nbsp;Will return all keys of the matched value.
 
 ```python
-p.find_value(data, 'A')
+find_value(data, 'A')
 ['chain']
 
-p.find_value(data, False)
+find_value(data, False)
 ['cable']
 ```
 
