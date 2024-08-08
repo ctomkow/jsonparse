@@ -268,38 +268,25 @@ class TestParser:
 
     def test_find_keys(self, parser, complex_json):
 
-        result = parser.find_keys(
-            complex_json,
-            ['start', 'end']
-        )
+        result = parser.find_keys(complex_json, ['start', 'end'])
 
         assert result == [[5, 8], [22, 99], [1, 9], [4, 7]]
 
     def test_find_keys_no_group(self, parser, complex_json):
 
-        result = parser.find_keys(
-            complex_json,
-            ['start', 'end'],
-            group=False
-        )
+        result = parser.find_keys(complex_json, ['start', 'end'], group=False)
 
         assert result == [5, 8, 22, 99, 1, 9, 4, 7]
 
     def test_find_keys_not_found(self, parser, complex_json):
 
-        result = parser.find_keys(
-            complex_json,
-            ['key_does_not_exist', 'neither_does_this_one']
-        )
+        result = parser.find_keys(complex_json, ['key_does_not_exist', 'neither_does_this_one'])
 
         assert result == []
 
     def test_find_keys_one_not_found(self, parser, complex_json):
 
-        result = parser.find_keys(
-            complex_json,
-            ['exists', 'key_does_not_exist', 'ppu']
-        )
+        result = parser.find_keys(complex_json, ['exists', 'key_does_not_exist', 'ppu'])
 
         assert result == [[True, 0.55], [False, 42], [None, 7]]
 

@@ -124,7 +124,7 @@ def _pythonify(data):
     # type: (json) -> Any
     try:
         return json.loads(data)
-    except json.decoder.JSONDecodeError:
+    except ValueError:
         raise
 
 
