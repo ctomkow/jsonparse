@@ -51,7 +51,7 @@ maintainers = [
 name = "jsonparse"
 packages = ["jsonparse"]
 readme = "README.md"
-requires-python = "==2.7,>=3.6"
+requires-python = "~= 2.7, >= 3.6"
 
 [project.optional-dependencies]
 webapi = [
