@@ -32,7 +32,8 @@ class Parser:
 
     """
 
-    def __init__(self, stack_trace: bool = False, queue_trace: bool = False) -> None:
+    def __init__(self, stack_trace=False, queue_trace=False):
+        # type: (bool, bool) -> None
         """
         Instantiates a Parser object used to access the search methods.
 
@@ -49,8 +50,8 @@ class Parser:
         self.stack_ref = self._stack_init()
         self.queue_ref = self._queue_init()
 
-    def find_key(self, data: Union[dict, list], key: str) -> list:
-
+    def find_key(self, data, key):
+        # type: (Union[dict, list], str) -> list
         if not self._valid_key_input(data, key):
             raise
 
@@ -77,8 +78,8 @@ class Parser:
 
         return value_list
 
-    def find_keys(self, data: Union[dict, list], keys: list, group: bool = True) -> list:
-
+    def find_keys(self, data, keys, group=True):
+        # type: (Union[dict, list], list, bool) -> list
         if not self._valid_keys_input(data, keys, group):
             raise
 
@@ -107,8 +108,8 @@ class Parser:
 
         return value_list
 
-    def find_key_chain(self, data: Union[dict, list], keys: list) -> list:
-
+    def find_key_chain(self, data, keys):
+        # type: (Union[dict, list], list) -> list
         if not self._valid_key_chain_input(data, keys):
             raise
 
@@ -145,8 +146,8 @@ class Parser:
 
         return self.queue_ref
 
-    def find_key_value(self, data: Union[dict, list], key: str, value: Union[str, int, float, bool, None]) -> list:
-
+    def find_key_value(self, data, key, value):
+        # type: (Union[dict, list], str, Union[str, int, float, bool, None]) -> list
         if not self._valid_key_value_input(data, key, value):
             raise
 
@@ -171,8 +172,8 @@ class Parser:
 
         return value_list
 
-    def find_value(self, data: Union[dict, list], value: Union[str, int, float, bool, None]) -> list:
-
+    def find_value(self, data, value):
+        # type: (Union[dict, list], Union[str, int, float, bool, None]) -> list
         if not self._valid_value_input(data, value):
             raise
 
@@ -200,35 +201,35 @@ class Parser:
 
     # STACK operations
 
-    def _stack_init(self) -> list:
-
+    def _stack_init(self):
+        # type: () -> list
         stack = []
         return stack
 
-    def _stack_push(self, elem: Union[dict, list]) -> None:
-
+    def _stack_push(self, elem):
+        # type: (Union[dict, list]) -> None
         self.stack_ref.append(elem)
 
-    def _stack_pop(self) -> Union[dict, list]:
-
+    def _stack_pop(self):
+        # type: () -> Union[dict, list]
         try:
             return self.stack_ref.pop()
         except IndexError:
             raise
 
-    def _stack_peak(self) -> Union[dict, list]:
-
+    def _stack_peak(self):
+        # type: () -> Union[dict, list]
         try:
             return self.stack_ref[-1:][0]
         except IndexError:
             raise
 
-    def _stack_size(self) -> int:
-
+    def _stack_size(self):
+        # type: () -> int
         return len(self.stack_ref)
 
-    def _stack_push_list_elem(self, elem: list) -> None:
-
+    def _stack_push_list_elem(self, elem):
+        # type: (list) -> None
         if type(elem) is not list:
             raise TypeError
 
@@ -239,8 +240,8 @@ class Parser:
                 self._stack_push(e)
                 self._stack_trace()
 
-    def _stack_all_key_values_in_dict(self, key: str, elem: dict) -> list:
-
+    def _stack_all_key_values_in_dict(self, key, elem):
+        # type: (str, dict) -> list
         value_list = []
 
         if type(elem) is not dict:
@@ -259,8 +260,8 @@ class Parser:
                     self._stack_trace()
         return value_list
 
-    def _stack_all_keys_values_in_dict(self, keys: list, elem: dict) -> list:
-
+    def _stack_all_keys_values_in_dict(self, keys, elem):
+        # type: (list, dict) -> list
         value_list = []
 
         if type(elem) is not dict:
@@ -282,8 +283,8 @@ class Parser:
                         pushed = True
         return value_list
 
-    def _stack_all_key_and_value_in_dict(self, key: str, value: Union[str, int, float, bool, None], elem: dict) -> bool:
-
+    def _stack_all_key_and_value_in_dict(self, key, value, elem):
+        # type: (str, Union[str, int, float, bool, None], dict) -> bool
         if type(elem) is not dict:
             raise TypeError
         elif type(key) is not str:
@@ -302,8 +303,8 @@ class Parser:
                     self._stack_trace()
         return False
 
-    def _stack_all_value_in_dict(self, value: Union[str, int, float, bool, None], elem: dict) -> str:
-
+    def _stack_all_value_in_dict(self, value, elem):
+        # type: (Union[str, int, float, bool, None], dict) -> str
         if type(elem) is not dict:
             raise TypeError
         elif not isinstance(value, (str, int, float, bool, type(None))):
@@ -320,8 +321,8 @@ class Parser:
                     self._stack_trace()
         return False
 
-    def _stack_trace(self) -> None:
-
+    def _stack_trace(self):
+        # type: () -> None
         if self.stack_trace:
             print("STACK DEPTH: {}".format(self._stack_size()))
             try:
@@ -331,35 +332,35 @@ class Parser:
 
     # QUEUE operations
 
-    def _queue_init(self) -> list:
-
+    def _queue_init(self):
+        # type: () -> list
         queue = []
         return queue
 
-    def _queue_push(self, elem: Union[dict, list]) -> None:
-
+    def _queue_push(self, elem):
+        # type: (Union[dict, list]) -> None
         self.queue_ref.append(elem)
 
-    def _queue_pop(self) -> Union[dict, list]:
-
+    def _queue_pop(self):
+        # type: () -> Union[dict, list]
         try:
             return self.queue_ref.pop(0)
         except IndexError:
             raise
 
-    def _queue_peak(self) -> Union[dict, list]:
-
+    def _queue_peak(self):
+        # type: () -> Union[dict, list]
         try:
             return self.queue_ref[0]
         except IndexError:
             raise
 
-    def _queue_size(self) -> int:
-
+    def _queue_size(self):
+        # type: () -> int
         return len(self.queue_ref)
 
-    def _queue_push_list_elem(self, elem: list) -> None:
-
+    def _queue_push_list_elem(self, elem):
+        # type: (list) -> None
         if type(elem) is not list:
             raise TypeError
 
@@ -370,8 +371,8 @@ class Parser:
                 self._queue_push(e)
                 self._queue_trace()
 
-    def _queue_all_key_values_in_dict(self, key: str, elem: dict) -> bool:
-
+    def _queue_all_key_values_in_dict(self, key, elem):
+        # type: (str, dict) -> bool
         found = False
         if type(elem) is not dict:
             raise TypeError
@@ -393,8 +394,8 @@ class Parser:
         else:
             return False
 
-    def _queue_trace(self) -> None:
-
+    def _queue_trace(self):
+        # type: () -> None
         if self.queue_trace:
             print("QUEUE DEPTH: {}".format(self._queue_size()))
             try:
@@ -404,8 +405,8 @@ class Parser:
 
     # Input validation
 
-    def _valid_key_input(self, data: Union[dict, list], key: str) -> bool:
-
+    def _valid_key_input(self, data, key):
+        # type: (Union[dict, list], str) -> bool
         if not isinstance(data, (dict, list)):
             raise TypeError
         elif not isinstance(key, str):
@@ -414,8 +415,8 @@ class Parser:
             raise ValueError
         return True
 
-    def _valid_keys_input(self, data: Union[dict, list], keys: list, group: bool) -> bool:
-
+    def _valid_keys_input(self, data, keys, group):
+        # type: (Union[dict, list], list, bool) -> bool
         if not isinstance(data, (dict, list)):
             raise TypeError
         elif not isinstance(keys, list):
@@ -426,8 +427,8 @@ class Parser:
             raise TypeError
         return True
 
-    def _valid_key_chain_input(self, data: Union[dict, list], keys: list) -> bool:
-
+    def _valid_key_chain_input(self, data, keys):
+        # type: (Union[dict, list], list) -> bool
         if not isinstance(data, (dict, list)):
             raise TypeError
         elif not isinstance(keys, list):
@@ -441,9 +442,8 @@ class Parser:
 
         return True
 
-    def _valid_key_value_input(self, data: Union[dict, list], key: str,
-            value: Union[str, int, float, bool, None]) -> bool:
-
+    def _valid_key_value_input(self, data, key, value):
+        # type: (Union[dict, list], str, Union[str, int, float, bool, None]) -> bool
         if not isinstance(data, (dict, list)):
             raise TypeError
         elif not isinstance(key, str):
@@ -454,8 +454,8 @@ class Parser:
             raise TypeError
         return True
 
-    def _valid_value_input(self, data: Union[dict, list], value: Union[str, int, float, bool, None]) -> bool:
-
+    def _valid_value_input(self, data, value):
+        # type: (Union[dict, list], Union[str, int, float, bool, None]) -> bool
         if not isinstance(data, (dict, list)):
             raise TypeError
         elif not isinstance(value, (str, int, float, bool, type(None))):

@@ -30,7 +30,7 @@ def get_docs():
 # accept a singular key
 # /v1/key/mykey
 @app.post('/v1/key/<path:key>')
-def _find_key(key: str):
+def _find_key(key):
 
     if not key:
         return (jsonify(error="key must not be empty"), 400)
@@ -120,7 +120,7 @@ def _find_key_value():
 # accept a singular value
 # /v1/value/myvalue
 @app.post('/v1/value/<path:value>')
-def _find_value(value: str):
+def _find_value(value):
 
     if not value:
         return jsonify(error="value must not be empty"), 400

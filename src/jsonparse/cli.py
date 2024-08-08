@@ -2,6 +2,9 @@
 # Craig Tomkow
 # 2022-10-03
 
+# behold, the future!
+from __future__ import print_function
+
 # local imports
 from .parser import Parser
 from .version import __version__
@@ -23,8 +26,8 @@ def entrypoint():
     _parse_input(args)
 
 
-def _flags(version: str) -> argparse.ArgumentParser:
-
+def _flags(version):
+    # type: (str) -> argparse.ArgumentParser
     parser = argparse.ArgumentParser(
         prog='jsonparse',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -79,8 +82,8 @@ jp value '"strValue"' --file test.json
     return parser
 
 
-def _parse_input(args: argparse.Namespace) -> None:
-
+def _parse_input(args):
+    # type: (argparse.ArgumentParser) -> None
     try:
         data = _pythonify(_input(args.file))
     except json.decoder.JSONDecodeError:
@@ -109,29 +112,29 @@ def _parse_input(args: argparse.Namespace) -> None:
         _print(_jsonify(Parser().find_value(data, value)))
 
 
-def _input(fp: io.TextIOWrapper) -> str:
-
+def _input(fp):
+    # type: (io.TextIOWrapper) -> str
     data = ''
     for line in fp:
         data += line.rstrip()
     return data
 
 
-def _pythonify(data: json) -> Any:
-
+def _pythonify(data):
+    # type: (json) -> Any
     try:
         return json.loads(data)
     except json.decoder.JSONDecodeError:
         raise
 
 
-def _jsonify(data: Any) -> json:
-
+def _jsonify(data):
+    # type: (Any) -> json
     return json.dumps(data)
 
 
-def _print(data: str) -> None:
-
+def _print(data):
+    # type: (str) -> None
     for elem in json.loads(data):
         print(_jsonify(elem))
 

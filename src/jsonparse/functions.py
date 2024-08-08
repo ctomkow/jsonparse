@@ -4,7 +4,8 @@ from .parser import Parser
 from typing import Union
 
 
-def find_key(data: Union[dict, list], key: str) -> list:
+def find_key(data, key):
+    # type: (Union[dict, list], str) -> list
     """
     Search JSON data that consists of key:value pairs for all instances of provided key. The data can have complex
     nested dictionaries and lists. If duplicate keys exist in the data (at any layer) all matching key values will
@@ -19,7 +20,8 @@ def find_key(data: Union[dict, list], key: str) -> list:
     return Parser().find_key(data, key)
 
 
-def find_keys(data: Union[dict, list], keys: list, group: bool = True) -> list:
+def find_keys(data, keys, group=True):
+    # type: (Union[dict, list], list, bool) -> list
     """
     Search JSON data that consists of key:value pairs for all instances of provided keys. The data can have complex
     nested dictionaries and lists. If duplicate keys exist in the data (at any layer) all matching key values will
@@ -39,7 +41,8 @@ def find_keys(data: Union[dict, list], keys: list, group: bool = True) -> list:
     return Parser().find_keys(data, keys, group=group)
 
 
-def find_key_chain(data: Union[dict, list], keys: list) -> list:
+def find_key_chain(data, keys):
+    # type: (Union[dict, list], list) -> list
     """
     Search JSON data that consists of key:value pairs for the first instance of provided key chain. The data can
     have complex nested dictionaries and lists. If duplicate key chains exist in the data, all key chain values will
@@ -56,7 +59,8 @@ def find_key_chain(data: Union[dict, list], keys: list) -> list:
     return Parser().find_key_chain(data, keys)
 
 
-def find_key_value(data: Union[dict, list], key: str, value: Union[str, int, float, bool, None]) -> list:
+def find_key_value(data, key, value):
+    # type: (Union[dict, list], str, Union[str, int, float, bool, None]) -> list
     """
     Search JSON data that consists of key:value pairs for all instances of provided key and value pair.
     The parent set that contains the key:value pair will be returned. The data can have complex nested
@@ -75,7 +79,8 @@ def find_key_value(data: Union[dict, list], key: str, value: Union[str, int, flo
     return Parser().find_key_value(data, key, value)
 
 
-def find_value(data: Union[dict, list], value: Union[str, int, float, bool, None]) -> list:
+def find_value(data, value):
+    # type: (Union[dict, list], Union[str, int, float, bool, None]) -> list
     """
     Search JSON data that consists of key:value pairs for all instances of provided value, returning the associated key (opposite of find_key).
     The data can have complex nested dictionaries and lists. If duplicate values exist in the data (at any layer),
