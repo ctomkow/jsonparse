@@ -68,7 +68,7 @@ class Parser:
 
             if type(elem) is list:
                 self._stack_push_list_elem(elem)
-            elif type(elem) is dict:
+            elif type(elem) is dict or type(elem) is OrderedDict:
                 value = self._stack_all_key_values_in_dict(key, elem)
                 if value:
                     for v in value:
@@ -96,7 +96,7 @@ class Parser:
 
             if type(elem) is list:
                 self._stack_push_list_elem(elem)
-            elif type(elem) is dict:
+            elif type(elem) is dict or type(elem) is OrderedDict:
                 value = self._stack_all_keys_values_in_dict(keys, elem)
                 if value and group:
                     value_list.insert(0, value)
@@ -133,7 +133,7 @@ class Parser:
 
                 if type(elem) is list:
                     self._queue_push_list_elem(elem)
-                elif type(elem) is dict:
+                elif type(elem) is dict or type(elem) is OrderedDict:
                     if self._queue_all_key_values_in_dict(keys[0], elem):
                         key_found = True
                 else:  # according to RFC 7159, valid JSON can also contain a
@@ -164,7 +164,7 @@ class Parser:
 
             if type(elem) is list:
                 self._stack_push_list_elem(elem)
-            elif type(elem) is dict:
+            elif type(elem) is dict or type(elem) is OrderedDict:
                 if self._stack_all_key_and_value_in_dict(key, value, elem):
                     value_list.insert(0, elem)
             else:  # according to RFC 7159, valid JSON can also contain a
@@ -190,7 +190,7 @@ class Parser:
 
             if type(elem) is list:
                 self._stack_push_list_elem(elem)
-            elif type(elem) is dict:
+            elif type(elem) is dict or type(elem) is OrderedDict:
                 key = self._stack_all_value_in_dict(value, elem)
                 if key:
                     key_list.insert(0, key)
@@ -245,7 +245,7 @@ class Parser:
         # type: (str, dict) -> list
         value_list = []
 
-        if type(elem) is not dict:
+        if type(elem) is not dict or type(elem) is not OrderedDict:
             raise TypeError
         elif type(key) is not str:
             raise TypeError
@@ -265,7 +265,7 @@ class Parser:
         # type: (list, dict) -> list
         value_list = []
 
-        if type(elem) is not dict:
+        if type(elem) is not dict or type(elem) is not OrderedDict:
             raise TypeError
         elif type(keys) is not list:
             raise TypeError
@@ -286,7 +286,7 @@ class Parser:
 
     def _stack_all_key_and_value_in_dict(self, key, value, elem):
         # type: (str, Union[str, int, float, bool, None], dict) -> bool
-        if type(elem) is not dict:
+        if type(elem) is not dict or type(elem) is not OrderedDict:
             raise TypeError
         elif type(key) is not str:
             raise TypeError
@@ -306,7 +306,7 @@ class Parser:
 
     def _stack_all_value_in_dict(self, value, elem):
         # type: (Union[str, int, float, bool, None], dict) -> str
-        if type(elem) is not dict:
+        if type(elem) is not dict or type(elem) is not OrderedDict:
             raise TypeError
         elif not isinstance(value, (str, int, float, bool, type(None))):
             raise TypeError
@@ -375,7 +375,7 @@ class Parser:
     def _queue_all_key_values_in_dict(self, key, elem):
         # type: (str, dict) -> bool
         found = False
-        if type(elem) is not dict:
+        if type(elem) is not dict or type(elem) is not OrderedDict:
             raise TypeError
         elif type(key) is not str:
             raise TypeError
