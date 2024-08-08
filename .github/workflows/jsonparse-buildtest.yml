@@ -17,11 +17,6 @@ jobs:
       image: python:2.7.18-buster  # include 2.7 because I saw a download on PyPi stats.
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
-        with:
-          python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
           pip install .[buildtest27_library]
