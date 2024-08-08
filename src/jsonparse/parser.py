@@ -4,6 +4,7 @@
 
 # python imports
 from typing import Union
+from collections import OrderedDict
 
 
 class Parser:
@@ -406,8 +407,8 @@ class Parser:
     # Input validation
 
     def _valid_key_input(self, data, key):
-        # type: (Union[dict, list], str) -> bool
-        if not isinstance(data, (dict, list)):
+        # type: (Union[dict, list, OrderedDict], str) -> bool
+        if not isinstance(data, (dict, list, OrderedDict)):
             raise TypeError
         elif not isinstance(key, str):
             raise TypeError
@@ -416,8 +417,8 @@ class Parser:
         return True
 
     def _valid_keys_input(self, data, keys, group):
-        # type: (Union[dict, list], list, bool) -> bool
-        if not isinstance(data, (dict, list)):
+        # type: (Union[dict, list, OrderedDict], list, bool) -> bool
+        if not isinstance(data, (dict, list, OrderedDict)):
             raise TypeError
         elif not isinstance(keys, list):
             raise TypeError
@@ -428,8 +429,8 @@ class Parser:
         return True
 
     def _valid_key_chain_input(self, data, keys):
-        # type: (Union[dict, list], list) -> bool
-        if not isinstance(data, (dict, list)):
+        # type: (Union[dict, list, OrderedDict], list) -> bool
+        if not isinstance(data, (dict, list, OrderedDict)):
             raise TypeError
         elif not isinstance(keys, list):
             raise TypeError
@@ -443,8 +444,8 @@ class Parser:
         return True
 
     def _valid_key_value_input(self, data, key, value):
-        # type: (Union[dict, list], str, Union[str, int, float, bool, None]) -> bool
-        if not isinstance(data, (dict, list)):
+        # type: (Union[dict, list, OrderedDict], str, Union[str, int, float, bool, None]) -> bool
+        if not isinstance(data, (dict, list, OrderedDict)):
             raise TypeError
         elif not isinstance(key, str):
             raise TypeError
@@ -455,8 +456,8 @@ class Parser:
         return True
 
     def _valid_value_input(self, data, value):
-        # type: (Union[dict, list], Union[str, int, float, bool, None]) -> bool
-        if not isinstance(data, (dict, list)):
+        # type: (Union[dict, list, OrderedDict], Union[str, int, float, bool, None]) -> bool
+        if not isinstance(data, (dict, list, OrderedDict)):
             raise TypeError
         elif not isinstance(value, (str, int, float, bool, type(None))):
             raise TypeError
