@@ -20,8 +20,8 @@ NAME = 'jsonparse'
 DESCRIPTION = 'Search through JSON data key:values'
 URL = url = 'https://github.com/ctomkow/jsonparse'
 EMAIL = 'ctomkow@gmail.com'
-AUTHOR = 'Craig Tomkow'
-REQUIRES_PYTHON = '>=3.6'
+AUTHOR = 'Craig Abt Tomkow'
+REQUIRES_PYTHON = ">=2.7,!=3.0,!=3.1,!=3.2,!=3.3,!=3.4,!=3.5"
 
 setup(
         name=NAME,
@@ -45,10 +45,15 @@ setup(
         ],
         extras_require={
           'webapi': [
-                        'flask==2.0.3',
-                        'gunicorn==20.1.0',
-                        'werkzeug==2.0.0',
-                    ]
+                'flask==2.0.3',
+                'gunicorn==20.1.0',
+                'werkzeug==2.0.0',
+            ],
+          'buildtest27_library_only': [
+                "hatchling==0.25.1",  # includes 2.7 support, but not 3.6 :/ CI will fail for 3.6
+                "pytest==4.6.11",
+                "pytest-cov==2.12.1",
+            ],
         },
         entry_points={
             'console_scripts': [
