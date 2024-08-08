@@ -3,7 +3,7 @@ FROM python:3.10.7-bullseye as build
 RUN mkdir -p /builddir
 WORKDIR /builddir
 COPY ./ ./
-RUN pip install .[buildtest]
+RUN pip install .[buildtest37_onward]
 RUN hatchling build --clean
 
 FROM python:3.10.7-slim-bullseye

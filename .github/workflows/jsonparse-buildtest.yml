@@ -24,10 +24,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          pip install .[buildtest27_library_only]
+          pip install .[buildtest27_library]
       - name: Test with pytest and generate codecov
         run: |
-          pytest --cov=jsonparse
+          pytest --cov=jsonparse --ignore=tests/test_webapi.py
       - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
