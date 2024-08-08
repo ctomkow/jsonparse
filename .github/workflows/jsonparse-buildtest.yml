@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install .[buildtest]
+          pip install .[buildtest27]
       - name: Test with pytest and generate codecov
         run: |
           pytest --cov=jsonparse

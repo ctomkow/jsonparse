@@ -3,8 +3,8 @@
 # 2022-10-03
 
 # local imports
-from src.jsonparse.parser import Parser
-from src.jsonparse.version import __version__
+from .parser import Parser
+from .version import __version__
 
 # python imports
 from typing import Any
