@@ -50,7 +50,7 @@ jp value '"strValue"' --file test.json
 """)
 
     # all flags here
-    parser.add_argument('-v', '--version', action='version', version=f"%(prog)s {version}")
+    parser.add_argument('-v', '--version', action='version', version="%(prog)s"+version)
 
     sub_parser = parser.add_subparsers()
 
