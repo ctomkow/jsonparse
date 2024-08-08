@@ -10,7 +10,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  buildPy2-7:
+  buildPy2-7_library_only:
 
     runs-on: ubuntu-20.04
     container:
@@ -25,10 +25,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install .[buildtest27]
+          pip install .[buildtest27_library_only]
       - name: Test with pytest and generate codecov
         run: |
-          pytest --cov=jsonparse
+          pytest --cov=jsonparse --ignore=test_webapi.py
       - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
