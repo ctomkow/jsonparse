@@ -3,8 +3,8 @@ FROM python:3.10.7-bullseye as build
 RUN mkdir -p /builddir
 WORKDIR /builddir
 COPY ./ ./
-RUN pip install -r requirements-test.txt
-RUN python -m build
+RUN pip install .[dev]
+RUN hatchling build --clean
 
 FROM python:3.10.7-slim-bullseye
 
@@ -13,7 +13,7 @@ LABEL name="jsonparse" \
       maintainer="ctomkow@gmail.com" \
       version=${VERSION} \
       summary="Search through JSON data key:values" \
-      description="jsonparse is a simple JSON parsing library. Extract what's needed from key:value pairs." \
+      description="ctrl-f for JSON. A simple JSON parsing library. Extract what's needed from key:value pairs." \
       url="https://github.com/ctomkow/jsonparse"
 
 RUN useradd --uid 1000 --create-home --shell /bin/bash nonroot

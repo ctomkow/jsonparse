@@ -3,7 +3,8 @@
 # 2022-10-03
 
 # local imports
-from .parser import Parser
+from src.jsonparse.parser import Parser
+from src.jsonparse.version import __version__
 
 # python imports
 from typing import Any
@@ -16,18 +17,10 @@ import json
 
 def entrypoint():
 
-    version = _read_version()
+    version = __version__
     parser = _flags(version)
     args = parser.parse_args()
     _parse_input(args)
-
-
-def _read_version() -> str:
-
-    # read from the VERSION file
-    with open(os.path.join(os.path.dirname(__file__), 'VERSION')) as version_file:
-        version = version_file.read().strip()
-    return version
 
 
 def _flags(version: str) -> argparse.ArgumentParser:

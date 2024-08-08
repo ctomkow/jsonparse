@@ -1,5 +1,5 @@
 
-from .parser import Parser
+from src.jsonparse.parser import Parser
 
 from typing import Union
 

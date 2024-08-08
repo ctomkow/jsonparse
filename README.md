@@ -25,16 +25,16 @@ pip install jsonparse
 Here is a quick example of what jsonparse is able to do.
 
 ```python
-from jsonparse import find_key, find_keys, find_key_chain, find_key_value, find_value
+from src.jsonparse import find_key, find_keys, find_key_chain, find_key_value, find_value
 
 data = [{
-    "key0":
+  "key0":
     {
-        "key1": "result",
-        "key2":
+      "key1": "result",
+      "key2":
         {
-            "key1": "result1",
-            "key3": {"key1": "result2"}
+          "key1": "result1",
+          "key3": {"key1": "result2"}
         }
     }
 }]
@@ -121,7 +121,7 @@ data = [
 ### Functions
 
 ```python
-from jsonparse import find_key, find_keys, find_key_chain, find_key_value, find_value
+from src.jsonparse import find_key, find_keys, find_key_chain, find_key_value, find_value
 ```
 
 ---

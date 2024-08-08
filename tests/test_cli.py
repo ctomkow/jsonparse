@@ -23,10 +23,6 @@ class TestCli:
 
         return '0.14.1'
 
-    def test_read_version(self, version):
-
-        assert cli._read_version() == version
-
     def test_flags_key(self):
 
         parser = cli._flags('v0.0.1-test')

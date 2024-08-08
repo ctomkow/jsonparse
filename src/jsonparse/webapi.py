@@ -5,7 +5,7 @@
 # Web api. Decorated functions that call the Parser methods
 
 # local imports
-from .parser import Parser
+from src.jsonparse.parser import Parser
 
 # python imports
 import json

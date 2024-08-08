@@ -1,0 +1,84 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.hatch.version]
+path = "src/jsonparse/version.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/jsonparse",
+    "tests",
+    "docs",
+    "Dockerfile",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/jsonparse"]
+artifacts = [
+    "jsonparse/static/css/*.css",
+    "jsonparse/static/img/*.png",
+    "jsonparse/static/js/*.js",
+    "jsonparse/static/openapi.yaml",
+    "jsonparse/templates/*.html"
+]
+
+[project]
+authors = [
+    { name = "Craig Abt Tomkow", email = "ctomkow@gmail.com" },
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+description = "ctrl-f for JSON. A simple JSON parsing library. Extract what's needed from key:value pairs."
+dynamic = ["version"]
+keywords = ["JSON", "parse", "python", "parsing", "search", "searching", "filter", "key value"]
+license-files = { paths = ["LICENSE"] }
+maintainers = [
+    { name = "Craig Abt Tomkow", email = "ctomkow@gmail.com" },
+]
+name = "jsonparse"
+packages = ["jsonparse"]
+readme = "README.md"
+requires-python = ">=3.6"
+
+[project.optional-dependencies]
+webapi = [
+    "flask==2.0.3",
+    "gunicorn==20.1.0",
+    "werkzeug==2.0.0"
+]
+dev = [
+    "hatchling==1.25.0",
+    "pytest==7.0.1",
+    "pytest-cov>=2.6.1,<3.0.0",
+    "flake8>=5.0.0",
+    "wheel>=0.37.0",
+    "setuptools>=59.6.0",
+    "build>=0.8.0",
+    "flask==2.0.3",
+    "gunicorn==20.1.0",
+    "werkzeug==2.0.0"
+]
+
+[project.scripts]
+jsonparse = "jsonparse.cli:entrypoint"
+jp = "jsonparse.cli:entrypoint"
+
+[project.urls]
+Documentation = "https://jsonparse.readthedocs.io/en/latest/"
+"Source code" = "https://github.com/ctomkow/jsonparse"
+
+[tool.flake8]
+max-line-length = 128
