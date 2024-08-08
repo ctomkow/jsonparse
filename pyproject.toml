@@ -71,7 +71,7 @@ dev = [
 buildtest27_library = [
     "hatchling==0.25.1",  # includes 2.7 support, but not 3.6 :/ CI will fail for 3.6
     "pytest==4.6.11",
-    "pytest-cov==2.12.1",
+    "pytest-cov==2.12.1"
 ]
 buildtest37_onward = [
     "hatchling==1.17.1",  # CI fix
