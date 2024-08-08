@@ -3,7 +3,7 @@
 # Test the webapi endpoints
 
 # local imports
-from jsonparse import webapi
+from src.jsonparse import webapi
 
 # 3rd part imports
 import pytest

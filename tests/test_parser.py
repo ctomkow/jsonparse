@@ -3,7 +3,7 @@
 # Tests only public methods
 
 # local imports
-from jsonparse.parser import Parser
+from src.jsonparse.parser import Parser
 
 # 3rd part imports
 import pytest
