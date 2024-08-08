@@ -21,7 +21,7 @@ DESCRIPTION = 'Search through JSON data key:values'
 URL = url = 'https://github.com/ctomkow/jsonparse'
 EMAIL = 'ctomkow@gmail.com'
 AUTHOR = 'Craig Tomkow'
-REQUIRES_PYTHON = '~=2.7, ~=3.6, ~=3.7, ~=3.8, ~=3.9, ~=3.10, ~=3.11, ~=3.12'
+REQUIRES_PYTHON = '>=2.7,!=3.0,!=3.1,!=3.2,!=3.3,!=3.4,!=3.5'
 
 setup(
         name=NAME,
