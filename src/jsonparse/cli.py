@@ -86,7 +86,7 @@ def _parse_input(args):
     # type: (argparse.ArgumentParser) -> None
     try:
         data = _pythonify(_input(args.file))
-    except json.decoder.JSONDecodeError:
+    except ValueError:
         print('input json not valid.')
         raise SystemExit(0)
 
@@ -99,14 +99,14 @@ def _parse_input(args):
     elif ('KVKEY' in args) and ('KVVALUE' in args):
         try:
             value = _pythonify(args.KVVALUE[0])
-        except json.decoder.JSONDecodeError:
+        except ValueError:
             print('value is not valid json. example valid types: \'"value"\', 5, false, true, null')
             raise SystemExit(0)
         _print(_jsonify(Parser().find_key_value(data, args.KVKEY[0], value)))
     elif 'VALUE' in args:
         try:
             value = _pythonify(args.VALUE[0])
-        except json.decoder.JSONDecodeError:
+        except ValueError:
             print('value is not valid json. example valid types: \'"value"\', 5, false, true, null')
             raise SystemExit(0)
         _print(_jsonify(Parser().find_value(data, value)))
