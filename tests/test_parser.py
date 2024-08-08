@@ -4,6 +4,7 @@
 
 # local imports
 from jsonparse.parser import Parser
+from collections import OrderedDict
 
 # 3rd part imports
 import pytest
@@ -20,81 +21,81 @@ class TestParser:
     def complex_json(self):
 
         return [
-            {
+            OrderedDict({
                 "id": "0001",
                 "type": "donut",
                 "exists": True,
                 "ppu": 0.55,
                 "batters":
-                    {
+                    OrderedDict({
                         "batter":
                             [
-                                {"id": "1001", "type": "Reg"},
-                                {"id": "1002", "type": "Chocolate"},
-                                {"id": "1003", "type": "Blueberry"},
-                                {"id": "1004", "type": "Devil's Food"},
-                                {"start": 5, "end": 8}
+                                OrderedDict({"id": "1001", "type": "Reg"}),
+                                OrderedDict({"id": "1002", "type": "Chocolate"}),
+                                OrderedDict({"id": "1003", "type": "Blueberry"}),
+                                OrderedDict({"id": "1004", "type": "Devil's Food"}),
+                                OrderedDict({"start": 5, "end": 8})
                             ]
-                    },
+                    }),
                 "topping":
                     [
-                        {"id": "5001", "ty": "None"},
-                        {"id": "5002", "type": "Glazed"},
-                        {"id": "5003", "type": "Sugar"},
-                        {"id": "5004", "type": "Powdered Sugar"},
-                        {"id": "5005", "type": "Chocolate with Sprinkles"},
-                        {"id": "5006", "type": "Chocolate"},
-                        {"id": "5007", "type": "Maple"}
+                        OrderedDict({"id": "5001", "ty": "None"}),
+                        OrderedDict({"id": "5002", "type": "Glazed"}),
+                        OrderedDict({"id": "5003", "type": "Sugar"}),
+                        OrderedDict({"id": "5004", "type": "Powdered Sugar"}),
+                        OrderedDict({"id": "5005", "type": "Chocolate with Sprinkles"}),
+                        OrderedDict({"id": "5006", "type": "Chocolate"}),
+                        OrderedDict({"id": "5007", "type": "Maple"})
                     ],
                 "start": 22,
                 "end": 99
-            },
-            {
+            }),
+            OrderedDict({
                 "id": "0002",
                 "type": "donut",
                 "exists": False,
                 "ppu": 42,
                 "batters":
-                    {
+                    OrderedDict({
                         "batter":
                             [
-                                {"id": "1001", "type": "Rul"}
+                                OrderedDict({"id": "1001", "type": "Rul"})
                             ]
-                    },
+                    }),
                 "top_stuff":
                     [
-                        {"id": "5001", "typ": "None"},
-                        {"id": "5002", "type": "Glazed"},
-                        {"id": "5003", "type": "Sugar"},
-                        {"id": "5004", "type": "Chocolate"},
-                        {"id": "5005", "type": "Maple"}
+                        OrderedDict({"id": "5001", "typ": "None"}),
+                        OrderedDict({"id": "5002", "type": "Glazed"}),
+                        OrderedDict({"id": "5003", "type": "Sugar"}),
+                        OrderedDict({"id": "5004", "type": "Chocolate"}),
+                        OrderedDict({"id": "5005", "type": "Maple"})
                     ],
                 "start": 1,
                 "end": 9
-            },
-            {
+            }),
+            OrderedDict({
                 "id": "0003",
                 "type": "donut",
                 "exists": None,
                 "ppu": 7,
                 "batters":
-                    {
+                    OrderedDict({
                         "batter":
                             [
-                                {"id": "1001", "type": "Lar"},
-                                {"id": "1002", "type": "Chocolate"}
+                                OrderedDict({"id": "1001", "type": "Lar"}),
+                                OrderedDict({"id": "1002", "type": "Chocolate"})
                             ]
-                    },
+                    }),
                 "on_top_thing":
                     [
-                        {"id": "5001", "type": "None"},
-                        {"id": "5002", "type": "Glazed"},
-                        {"id": "5003", "type": "Chocolate"},
-                        {"id": "5004", "type": "Maple"}
+                        OrderedDict({"id": "5001", "type": "None"}),
+                        OrderedDict({"id": "5002", "type": "Glazed"}),
+                        OrderedDict({"id": "5003", "type": "Chocolate"}),
+                        OrderedDict({"id": "5004", "type": "Maple"})
                     ],
                 "start": 4,
                 "end": 7
-            }
+            })
         ]
 
     def test_find_key(self, parser, complex_json):

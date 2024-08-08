@@ -5,9 +5,9 @@ name: jsonparse-buildtest
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "dev" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "dev" ]
 
 jobs:
   buildPy2-7_library_only:
