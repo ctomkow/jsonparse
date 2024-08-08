@@ -60,6 +60,7 @@ webapi = [
     "werkzeug==2.0.0"
 ]
 dev = [
+    "hatchling==1.17.1",
     "pytest==7.0.1",
     "pytest-cov>=2.6.1,<3.0.0",
     "flake8>=5.0.0",
@@ -77,6 +78,9 @@ buildtest37_onward = [
     "pytest==7.0.1",
     "pytest-cov>=2.6.1,<3.0.0",
     "flake8>=5.0.0",
+    "flask==2.0.3",
+    "gunicorn==20.1.0",
+    "werkzeug==2.0.0"
 ]
 
 [project.scripts]

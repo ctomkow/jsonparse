@@ -4,7 +4,7 @@
 
 
 # local imports
-from src.jsonparse import cli
+from jsonparse import cli
 
 # python imports
 import os
