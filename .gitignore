@@ -13,3 +13,8 @@ docs/_static
 docs/_templates
 docs/make.bat
 test.json
+src/*.egg-info
+src/.coverage
+src/jsonparse/*.pyc
+tests/*.pyc
+venv3

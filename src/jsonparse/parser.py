@@ -4,6 +4,7 @@
 
 # python imports
 from typing import Union
+from collections import OrderedDict
 
 
 class Parser:
@@ -67,7 +68,7 @@ class Parser:
 
             if type(elem) is list:
                 self._stack_push_list_elem(elem)
-            elif type(elem) is dict:
+            elif isinstance(elem, (dict, OrderedDict)):
                 value = self._stack_all_key_values_in_dict(key, elem)
                 if value:
                     for v in value:
@@ -95,7 +96,7 @@ class Parser:
 
             if type(elem) is list:
                 self._stack_push_list_elem(elem)
-            elif type(elem) is dict:
+            elif isinstance(elem, (dict, OrderedDict)):
                 value = self._stack_all_keys_values_in_dict(keys, elem)
                 if value and group:
                     value_list.insert(0, value)
@@ -132,7 +133,7 @@ class Parser:
 
                 if type(elem) is list:
                     self._queue_push_list_elem(elem)
-                elif type(elem) is dict:
+                elif isinstance(elem, (dict, OrderedDict)):
                     if self._queue_all_key_values_in_dict(keys[0], elem):
                         key_found = True
                 else:  # according to RFC 7159, valid JSON can also contain a
@@ -163,7 +164,7 @@ class Parser:
 
             if type(elem) is list:
                 self._stack_push_list_elem(elem)
-            elif type(elem) is dict:
+            elif isinstance(elem, (dict, OrderedDict)):
                 if self._stack_all_key_and_value_in_dict(key, value, elem):
                     value_list.insert(0, elem)
             else:  # according to RFC 7159, valid JSON can also contain a
@@ -189,7 +190,7 @@ class Parser:
 
             if type(elem) is list:
                 self._stack_push_list_elem(elem)
-            elif type(elem) is dict:
+            elif isinstance(elem, (dict, OrderedDict)):
                 key = self._stack_all_value_in_dict(value, elem)
                 if key:
                     key_list.insert(0, key)
@@ -244,7 +245,7 @@ class Parser:
         # type: (str, dict) -> list
         value_list = []
 
-        if type(elem) is not dict:
+        if not isinstance(elem, (dict, OrderedDict)):
             raise TypeError
         elif type(key) is not str:
             raise TypeError
@@ -264,7 +265,7 @@ class Parser:
         # type: (list, dict) -> list
         value_list = []
 
-        if type(elem) is not dict:
+        if not isinstance(elem, (dict, OrderedDict)):
             raise TypeError
         elif type(keys) is not list:
             raise TypeError
@@ -285,7 +286,7 @@ class Parser:
 
     def _stack_all_key_and_value_in_dict(self, key, value, elem):
         # type: (str, Union[str, int, float, bool, None], dict) -> bool
-        if type(elem) is not dict:
+        if not isinstance(elem, (dict, OrderedDict)):
             raise TypeError
         elif type(key) is not str:
             raise TypeError
@@ -305,7 +306,7 @@ class Parser:
 
     def _stack_all_value_in_dict(self, value, elem):
         # type: (Union[str, int, float, bool, None], dict) -> str
-        if type(elem) is not dict:
+        if not isinstance(elem, (dict, OrderedDict)):
             raise TypeError
         elif not isinstance(value, (str, int, float, bool, type(None))):
             raise TypeError
@@ -374,7 +375,7 @@ class Parser:
     def _queue_all_key_values_in_dict(self, key, elem):
         # type: (str, dict) -> bool
         found = False
-        if type(elem) is not dict:
+        if not isinstance(elem, (dict, OrderedDict)):
             raise TypeError
         elif type(key) is not str:
             raise TypeError
@@ -406,8 +407,8 @@ class Parser:
     # Input validation
 
     def _valid_key_input(self, data, key):
-        # type: (Union[dict, list], str) -> bool
-        if not isinstance(data, (dict, list)):
+        # type: (Union[dict, list, OrderedDict], str) -> bool
+        if not isinstance(data, (dict, list, OrderedDict)):
             raise TypeError
         elif not isinstance(key, str):
             raise TypeError
@@ -416,8 +417,8 @@ class Parser:
         return True
 
     def _valid_keys_input(self, data, keys, group):
-        # type: (Union[dict, list], list, bool) -> bool
-        if not isinstance(data, (dict, list)):
+        # type: (Union[dict, list, OrderedDict], list, bool) -> bool
+        if not isinstance(data, (dict, list, OrderedDict)):
             raise TypeError
         elif not isinstance(keys, list):
             raise TypeError
@@ -428,8 +429,8 @@ class Parser:
         return True
 
     def _valid_key_chain_input(self, data, keys):
-        # type: (Union[dict, list], list) -> bool
-        if not isinstance(data, (dict, list)):
+        # type: (Union[dict, list, OrderedDict], list) -> bool
+        if not isinstance(data, (dict, list, OrderedDict)):
             raise TypeError
         elif not isinstance(keys, list):
             raise TypeError
@@ -443,8 +444,8 @@ class Parser:
         return True
 
     def _valid_key_value_input(self, data, key, value):
-        # type: (Union[dict, list], str, Union[str, int, float, bool, None]) -> bool
-        if not isinstance(data, (dict, list)):
+        # type: (Union[dict, list, OrderedDict], str, Union[str, int, float, bool, None]) -> bool
+        if not isinstance(data, (dict, list, OrderedDict)):
             raise TypeError
         elif not isinstance(key, str):
             raise TypeError
@@ -455,8 +456,8 @@ class Parser:
         return True
 
     def _valid_value_input(self, data, value):
-        # type: (Union[dict, list], Union[str, int, float, bool, None]) -> bool
-        if not isinstance(data, (dict, list)):
+        # type: (Union[dict, list, OrderedDict], Union[str, int, float, bool, None]) -> bool
+        if not isinstance(data, (dict, list, OrderedDict)):
             raise TypeError
         elif not isinstance(value, (str, int, float, bool, type(None))):
             raise TypeError
