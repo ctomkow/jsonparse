@@ -1,14 +1,9 @@
-# local imports
-import jsonparse
-
 # python imports
-from setuptools import setup, find_namespace_packages
-import os
+from setuptools import setup, find_packages
 from codecs import open
 
 # read from the VERSION file
-with open(os.path.join(
-          os.path.dirname(jsonparse.__file__), 'VERSION')) as version_file:
+with open('src/jsonparse/VERSION') as version_file:
     version = version_file.read().strip()
 
 # long description as readme
@@ -56,7 +51,7 @@ setup(
                 'jp=jsonparse.cli:entrypoint',
             ],
         },
-        packages=find_namespace_packages(include=["jsonparse"]),
+        packages=find_packages(include=["jsonparse"]),
         package_dir={"jsonparse": "jsonparse"},
         package_data={
             'jsonparse': ['VERSION'],
