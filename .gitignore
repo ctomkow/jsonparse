@@ -17,3 +17,4 @@ src/*.egg-info
 src/.coverage
 src/jsonparse/*.pyc
 tests/*.pyc
+venv3
