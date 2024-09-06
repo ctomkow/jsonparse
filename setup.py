@@ -51,8 +51,8 @@ setup(
                 'jp=jsonparse.cli:entrypoint',
             ],
         },
-        packages=find_packages(include=["jsonparse"]),
-        package_dir={"jsonparse": "jsonparse"},
+        packages=find_packages(where="src"),
+        package_dir={"": "src"},
         package_data={
             'jsonparse': ['VERSION'],
             'jsonparse.static.css': ['*.css'],
