@@ -52,7 +52,7 @@ class Parser:
         self.queue_ref = self._queue_init()
 
     def find_key(self, data, key):
-        # type: (Union[dict, list], str) -> list
+        # type: (Union[dict, list, OrderedDict], str) -> list
         if not self._valid_key_input(data, key):
             raise
 
@@ -80,7 +80,7 @@ class Parser:
         return value_list
 
     def find_keys(self, data, keys, group=True):
-        # type: (Union[dict, list], list, bool) -> list
+        # type: (Union[dict, list, OrderedDict], list, bool) -> list
         if not self._valid_keys_input(data, keys, group):
             raise
 
@@ -110,7 +110,7 @@ class Parser:
         return value_list
 
     def find_key_chain(self, data, keys):
-        # type: (Union[dict, list], list) -> list
+        # type: (Union[dict, list, OrderedDict], list) -> list
         if not self._valid_key_chain_input(data, keys):
             raise
 
@@ -148,7 +148,7 @@ class Parser:
         return self.queue_ref
 
     def find_key_value(self, data, key, value):
-        # type: (Union[dict, list], str, Union[str, int, float, bool, None]) -> list
+        # type: (Union[dict, list, OrderedDict], str, Union[str, int, float, bool, None]) -> list
         if not self._valid_key_value_input(data, key, value):
             raise
 
@@ -174,7 +174,7 @@ class Parser:
         return value_list
 
     def find_value(self, data, value):
-        # type: (Union[dict, list], Union[str, int, float, bool, None]) -> list
+        # type: (Union[dict, list, OrderedDict], Union[str, int, float, bool, None]) -> list
         if not self._valid_value_input(data, value):
             raise
 
@@ -208,18 +208,18 @@ class Parser:
         return stack
 
     def _stack_push(self, elem):
-        # type: (Union[dict, list]) -> None
+        # type: (Union[dict, list, OrderedDict]) -> None
         self.stack_ref.append(elem)
 
     def _stack_pop(self):
-        # type: () -> Union[dict, list]
+        # type: () -> Union[dict, list, OrderedDict]
         try:
             return self.stack_ref.pop()
         except IndexError:
             raise
 
     def _stack_peak(self):
-        # type: () -> Union[dict, list]
+        # type: () -> Union[dict, list, OrderedDict]
         try:
             return self.stack_ref[-1:][0]
         except IndexError:
@@ -242,7 +242,7 @@ class Parser:
                 self._stack_trace()
 
     def _stack_all_key_values_in_dict(self, key, elem):
-        # type: (str, dict) -> list
+        # type: (str, Union[dict, OrderedDict]) -> list
         value_list = []
 
         if not isinstance(elem, (dict, OrderedDict)):
@@ -262,7 +262,7 @@ class Parser:
         return value_list
 
     def _stack_all_keys_values_in_dict(self, keys, elem):
-        # type: (list, dict) -> list
+        # type: (list, Union[dict, OrderedDict]) -> list
         value_list = []
 
         if not isinstance(elem, (dict, OrderedDict)):
@@ -285,7 +285,7 @@ class Parser:
         return value_list
 
     def _stack_all_key_and_value_in_dict(self, key, value, elem):
-        # type: (str, Union[str, int, float, bool, None], dict) -> bool
+        # type: (str, Union[str, int, float, bool, None], Union[dict, OrderedDict]) -> bool
         if not isinstance(elem, (dict, OrderedDict)):
             raise TypeError
         elif type(key) is not str:
@@ -305,7 +305,7 @@ class Parser:
         return False
 
     def _stack_all_value_in_dict(self, value, elem):
-        # type: (Union[str, int, float, bool, None], dict) -> str
+        # type: (Union[str, int, float, bool, None], Union[dict, OrderedDict]) -> str
         if not isinstance(elem, (dict, OrderedDict)):
             raise TypeError
         elif not isinstance(value, (str, int, float, bool, type(None))):
@@ -339,18 +339,18 @@ class Parser:
         return queue
 
     def _queue_push(self, elem):
-        # type: (Union[dict, list]) -> None
+        # type: (Union[dict, list, OrderedDict]) -> None
         self.queue_ref.append(elem)
 
     def _queue_pop(self):
-        # type: () -> Union[dict, list]
+        # type: () -> Union[dict, list, OrderedDict]
         try:
             return self.queue_ref.pop(0)
         except IndexError:
             raise
 
     def _queue_peak(self):
-        # type: () -> Union[dict, list]
+        # type: () -> Union[dict, list, OrderedDict]
         try:
             return self.queue_ref[0]
         except IndexError:
@@ -373,7 +373,7 @@ class Parser:
                 self._queue_trace()
 
     def _queue_all_key_values_in_dict(self, key, elem):
-        # type: (str, dict) -> bool
+        # type: (str, Union[dict, OrderedDict]) -> bool
         found = False
         if not isinstance(elem, (dict, OrderedDict)):
             raise TypeError

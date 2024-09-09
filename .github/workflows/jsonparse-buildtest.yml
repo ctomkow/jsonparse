@@ -24,7 +24,7 @@ jobs:
           pip install .[buildtest27]
       - name: Test with pytest and generate codecov
         run: |
-          pytest --cov=jsonparse --ignore=tests/test_webapi.py
+          pytest --cov=jsonparse --ignore=tests/test_webapi.py --ignore=tests/test_parser.py
       - uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

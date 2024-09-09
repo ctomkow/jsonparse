@@ -11,6 +11,7 @@
 > **jsonparse** is a simple JSON parsing library. Extract what's needed from key:value pairs.
 
 ## What's New
+ - Python 2.7 compat. :sweat_smile: :relieved:
  - A new function, [find_value](#find_value), has been added. This function will return all keys of the matched value. :grinning:
  - [CLI tool](#CLI-tool). Parse json text files or stdin via the command line :tada:
 
@@ -220,6 +221,10 @@ find_value(data, 'A')
 find_value(data, False)
 ['cable']
 ```
+
+# Python 2.7 Usage
+
+ - 2.7 does not guarantee ordering of dictionary's. If ordering matters, use [OrderedDict](https://docs.python.org/2.7/library/collections.html) for all dictionary's in the data.
 
 # Web API
 
