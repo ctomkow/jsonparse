@@ -129,7 +129,7 @@ from jsonparse import find_key, find_keys, find_key_chain, find_key_value, find_
 
 ### find_key
 <pre>
-<b>find_key(</b><i>data</i>: dict | list, <i>key</i>: str<b>)</b> -> list
+<b>find_key(</b><i>data</i>: dict | list | OrderedDict, <i>key</i>: str<b>)</b> -> list
 </pre>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Will return all values of the matched key.
@@ -146,7 +146,7 @@ find_key(data, 'key')
 
 ### find_keys
 <pre>
-<b>find_keys(</b><i>data</i>: dict | list, <i>keys</i>: list, <i>group</i>: bool = True<b>)</b> -> list
+<b>find_keys(</b><i>data</i>: dict | list | OrderedDict, <i>keys</i>: list, <i>group</i>: bool = True<b>)</b> -> list
 </pre>
 
 &nbsp;&nbsp;&nbsp;&nbsp;The default return value is a two dimensional list. `[ [], [], ...]`.
@@ -167,7 +167,7 @@ find_keys(data, ['rope', 'cable'], group=False)
 
 ### find_key_chain
 <pre>
-<b>find_key_chain(</b><i>data</i>: dict | list, <i>keys</i>: list<b>)</b> -> list
+<b>find_key_chain(</b><i>data</i>: dict | list | OrderedDict, <i>keys</i>: list<b>)</b> -> list
 </pre>
 
 &nbsp;&nbsp;&nbsp;&nbsp;The key chain is an ordered list of keys. The chain needs to start at the root level of the nested data.
@@ -192,7 +192,7 @@ find_key_chain(data, ['*', 'key', '*'])
 
 ### find_key_value
 <pre>
-<b>find_key_value(</b><i>data</i>: dict | list, <i>key</i>: str, <i>value</i>: str | int | float | bool | None) -> list
+<b>find_key_value(</b><i>data</i>: dict | list | OrderedDict, <i>key</i>: str, <i>value</i>: str | int | float | bool | None) -> list
 </pre>
 
 &nbsp;&nbsp;&nbsp;&nbsp;The returned list contains the dictionaries that contain the specified key:value pair.
@@ -209,7 +209,7 @@ find_key_value(data, 'chain', 'B')
 
 ### find_value
 <pre>
-<b>find_value(</b><i>data</i>: dict | list, <i>value</i>: str | int | float | bool | None<b>)</b> -> list
+<b>find_value(</b><i>data</i>: dict | list | OrderedDict, <i>value</i>: str | int | float | bool | None<b>)</b> -> list
 </pre>
 
 &nbsp;&nbsp;&nbsp;&nbsp;Will return all keys of the matched value.
