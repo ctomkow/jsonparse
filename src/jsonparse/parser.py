@@ -32,9 +32,12 @@ class Parser:
         Returns a list of key(s) that have the corresponding value.
 
     """
+    data = None
+    in_functional_mode = False
+    in_func_chaining_mode = False
 
-    def __init__(self, stack_trace=False, queue_trace=False):
-        # type: (bool, bool) -> None
+    def __init__(self, data=None, stack_trace=False, queue_trace=False):
+        # type: (Union[dict, list, OrderedDict], bool, bool) -> None
         """
         Instantiates a Parser object used to access the search methods.
 
@@ -45,7 +48,9 @@ class Parser:
         queue_trace -- Set this to get a stdout printout of the queue as data is parsed. This must be a boolean value.
                        Default False.
         """
-
+        if data is not None:
+            self.in_func_chaining_mode = True
+            self.data = data
         self.stack_trace = stack_trace
         self.queue_trace = queue_trace
         self.stack_ref = self._stack_init()

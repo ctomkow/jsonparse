@@ -4,6 +4,10 @@ from .parser import Parser
 from typing import Union
 
 
+def load_json(data):
+    # type: Union[dict, list] -> None
+    Parser(data)
+
 def find_key(data, key):
     # type: (Union[dict, list], str) -> list
     """
